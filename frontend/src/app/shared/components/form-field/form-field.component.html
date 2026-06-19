@@ -1,0 +1,19 @@
+<div class="form-field" [class.form-field--invalid]="invalid">
+  <label class="form-field__label">{{ label }}</label>
+
+  <div class="form-field__control">
+    @if (icon) {
+      <span class="form-field__icon" aria-hidden="true">
+        <app-svg-icon [nome]="icon" cor="#6b625b" [tamanho]="20" />
+      </span>
+    }
+
+    <div class="form-field__input">
+      <ng-content />
+    </div>
+  </div>
+
+  @if (invalid && errorMessage) {
+    <span class="form-field__error">{{ errorMessage }}</span>
+  }
+</div>

@@ -1,0 +1,14 @@
+<div class="children-list page-padding">
+  <div class="children-list__header">
+    <h1>Crianças</h1>
+    <p>Gerencie e acompanhe a situação vacinal de cada filho separadamente.</p>
+  </div>
+
+  <div class="children-list__grid">
+    @for (summary of childSummaries$ | async; track summary.child.id) {
+      <app-child-card [summary]="summary" />
+    } @empty {
+      <p class="children-list__empty">Nenhuma criança cadastrada ainda.</p>
+    }
+  </div>
+</div>

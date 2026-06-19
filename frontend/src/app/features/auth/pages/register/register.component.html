@@ -1,0 +1,86 @@
+<app-auth-layout
+  visualIcon="usuario-adicionar"
+  visualTitle="Comece a cuidar da jornada vacinal hoje"
+  visualSubtitle="Crie sua conta e tenha controle individual de cada criança da família."
+>
+  <div class="auth-form">
+    <div class="auth-form__header">
+      <h1>Criar conta</h1>
+      <p>Preencha os dados para começar.</p>
+    </div>
+
+    @if (!isFirebaseConfigured) {
+      <p class="auth-config-warning">
+        Firebase ainda não configurado. Abra
+        <strong>src/environments/environment.ts</strong>
+        e cole as credenciais do seu projeto no Console Firebase.
+      </p>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <app-form-field
+        label="Nome"
+        icon="perfil"
+        [invalid]="!!(form.controls.displayName.invalid && form.controls.displayName.touched)"
+        errorMessage="Informe seu nome completo"
+      >
+        <ion-input
+          type="text"
+          formControlName="displayName"
+          placeholder="Seu nome"
+          autocomplete="name"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="E-mail"
+        icon="envelope-1"
+        [invalid]="!!(form.controls.email.invalid && form.controls.email.touched)"
+        errorMessage="Informe um e-mail válido"
+      >
+        <ion-input
+          type="email"
+          formControlName="email"
+          placeholder="seu@email.com"
+          autocomplete="email"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Senha"
+        icon="cadeado"
+        [invalid]="!!(form.controls.password.invalid && form.controls.password.touched)"
+        errorMessage="A senha deve ter pelo menos 6 caracteres"
+      >
+        <ion-input
+          type="password"
+          formControlName="password"
+          placeholder="Mínimo 6 caracteres"
+          autocomplete="new-password"
+        />
+      </app-form-field>
+
+      @if (errorMessage) {
+        <p class="auth-error">{{ errorMessage }}</p>
+      }
+
+      <ion-button
+        expand="block"
+        type="submit"
+        class="auth-submit"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+          <ion-spinner name="crescent" />
+        } @else {
+          Cadastrar
+        }
+      </ion-button>
+    </form>
+
+    <p class="auth-footer">
+      Já tem conta?
+      <a routerLink="/auth/login">Entrar</a>
+    </p>
+  </div>
+</app-auth-layout>

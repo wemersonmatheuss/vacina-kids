@@ -1,0 +1,42 @@
+<ion-content fullscreen>
+  <div class="auth-layout">
+    <aside class="auth-layout__visual">
+      <div class="auth-layout__visual-content">
+        <div class="auth-layout__brand">
+          <app-svg-icon nome="check-escudo" cor="#473C33" [tamanho]="36" />
+          <span>Vacina Kids</span>
+        </div>
+
+        <div class="auth-layout__hero-icon">
+          <app-svg-icon [nome]="visualIcon" cor="#473C33" [tamanho]="72" />
+        </div>
+
+        <h2>{{ visualTitle }}</h2>
+        <p>{{ visualSubtitle }}</p>
+
+        <ul class="auth-layout__features">
+          <li>
+            <app-svg-icon nome="bebe" cor="#473C33" [tamanho]="20" />
+            Acompanhe cada criança separadamente
+          </li>
+          <li>
+            <app-svg-icon nome="calendario" cor="#473C33" [tamanho]="20" />
+            Controle vacinas e pendências
+          </li>
+          <li>
+            <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="20" />
+            Fique por dentro das campanhas
+          </li>
+        </ul>
+      </div>
+
+      <div class="auth-layout__decoration" aria-hidden="true">
+        <app-svg-icon nome="check-escudo" cor="#473C33" [tamanho]="180" />
+      </div>
+    </aside>
+
+    <section class="auth-layout__form">
+      <ng-content />
+    </section>
+  </div>
+</ion-content>

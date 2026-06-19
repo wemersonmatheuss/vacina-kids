@@ -1,8 +1,36 @@
 import { Routes } from '@angular/router';
 
+import { authGuard, guestGuard } from './core/guards/auth.guard';
+
 export const routes: Routes = [
   {
+    path: 'auth',
+    canActivate: [guestGuard],
+    children: [
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./features/auth/pages/login/login.component').then(
+            (m) => m.LoginComponent
+          ),
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./features/auth/pages/register/register.component').then(
+            (m) => m.RegisterComponent
+          ),
+      },
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
+    ],
+  },
+  {
     path: '',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./layout/layouts/main-layout/main-layout.component').then(
         (m) => m.MainLayoutComponent
@@ -19,6 +47,20 @@ export const routes: Routes = [
           import(
             './features/dashboard/pages/dashboard/dashboard.component'
           ).then((m) => m.DashboardComponent),
+      },
+      {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./features/profile/pages/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+      },
+      {
+        path: 'criancas',
+        loadComponent: () =>
+          import(
+            './features/children/pages/children-list/children-list.component'
+          ).then((m) => m.ChildrenListComponent),
       },
     ],
   },

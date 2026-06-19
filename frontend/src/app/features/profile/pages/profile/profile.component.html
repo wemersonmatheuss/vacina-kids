@@ -1,0 +1,24 @@
+<div class="profile page-padding">
+  @if (profile$ | async; as profile) {
+    <section class="profile-card">
+      <div class="profile-card__avatar">
+        <app-svg-icon nome="perfil" cor="#473C33" [tamanho]="36" />
+      </div>
+
+      <div>
+        <h1>{{ profile.displayName }}</h1>
+        <p>{{ profile.email }}</p>
+      </div>
+    </section>
+
+    <section class="profile-info">
+      <h2>Dados da conta</h2>
+      <p>Gerencie suas informações e preferências de acompanhamento vacinal.</p>
+    </section>
+  }
+
+  <button type="button" class="logout-btn" (click)="logout()">
+    <app-svg-icon nome="sair" cor="#FDA769" [tamanho]="20" />
+    Sair da conta
+  </button>
+</div>
