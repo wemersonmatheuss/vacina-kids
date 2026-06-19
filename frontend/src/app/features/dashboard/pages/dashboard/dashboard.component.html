@@ -1,1 +1,89 @@
-<h1>Dashboard funcionando 🚀</h1>
+@if (dashboardData$ | async; as data) {
+  <div class="dashboard">
+    <section class="welcome-banner">
+      <div class="welcome-banner__content">
+        <h2>Acompanhe a saúde vacinal da sua família</h2>
+        <p>
+          Visualize pendências, campanhas ativas e o progresso de cada criança em um só lugar.
+        </p>
+      </div>
+
+      <div class="welcome-banner__decoration" aria-hidden="true">
+        <app-svg-icon nome="check-escudo" [cor]="colors.primary" [tamanho]="64" />
+      </div>
+    </section>
+
+    @if (data.overdueCount > 0) {
+      <div class="alert-banner">
+        <app-svg-icon nome="documento-atencao" [cor]="colors.warning" [tamanho]="24" />
+        <div>
+          <strong>Atenção: vacina(s) em atraso</strong>
+          <p>
+            {{ data.overdueCount === 1 ? 'Existe 1 vacina' : 'Existem ' + data.overdueCount + ' vacinas' }}
+            com data prevista ultrapassada. Confira o histórico de cada criança.
+          </p>
+        </div>
+      </div>
+    }
+
+    <section class="summary-grid">
+      <app-summary-card
+        title="Crianças cadastradas"
+        [value]="data.childSummaries.length"
+        icon="bebe"
+        [accentColor]="colors.primary"
+        subtitle="Perfis individuais"
+      />
+
+      <app-summary-card
+        title="Campanhas ativas"
+        [value]="data.campaigns.length"
+        icon="megafone-anuncio"
+        [accentColor]="colors.secondary"
+        subtitle="Disponíveis agora"
+      />
+
+      <app-summary-card
+        title="Situação vacinal"
+        [value]="data.vaccinationRate + '%'"
+        icon="check-escudo"
+        [accentColor]="colors.warning"
+        subtitle="Média da família"
+      />
+    </section>
+
+    <section class="children-section">
+      <div class="section-header">
+        <div>
+          <h2>Suas crianças</h2>
+          <p class="section-header__subtitle">
+            Acompanhe cada filho separadamente, sem misturar históricos.
+          </p>
+        </div>
+      </div>
+
+      <div class="children-grid">
+        @for (summary of data.childSummaries; track summary.child.id) {
+          <app-child-card [summary]="summary" />
+        }
+      </div>
+    </section>
+
+    <section class="campaigns-section">
+      <div class="section-header">
+        <div>
+          <h2>Campanhas de vacinação</h2>
+          <p class="section-header__subtitle">
+            Fique por dentro das campanhas disponíveis para o público infantil.
+          </p>
+        </div>
+      </div>
+
+      <div class="campaigns-grid">
+        @for (campaign of data.campaigns; track campaign.id) {
+          <app-campaign-card [campaign]="campaign" />
+        }
+      </div>
+    </section>
+  </div>
+}

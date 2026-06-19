@@ -1,27 +1,44 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { CAMPAIGNS_MOCK } from '../mock-data/campaigns.mock';
-import { CHILDREN_MOCK } from '../mock-data/children.mock';
-import { VACCINE_RECORDS_MOCK } from '../mock-data/vaccine-records.mock';
-import { VACCINES_MOCK } from '../mock-data/vaccines.mock';
+import { FirestoreDataService } from './firestore-data.service';
+import { ChildSummary } from '../../shared/interfaces/child-summary.interface';
+import { Campaign } from '../../shared/interfaces/campaign.interface';
+import { Child } from '../../shared/interfaces/child.interface';
+import { Vaccine } from '../../shared/interfaces/vaccine.interface';
+import { VaccineRecord } from '../../shared/interfaces/vaccine-record.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  getChildren() {
-    return CHILDREN_MOCK;
+  constructor(private readonly firestoreData: FirestoreDataService) {}
+
+  getChildren(): Observable<Child[]> {
+    return this.firestoreData.getChildren();
   }
 
-  getVaccines() {
-    return VACCINES_MOCK;
+  getVaccines(): Observable<Vaccine[]> {
+    return this.firestoreData.getVaccines();
   }
 
-  getVaccineRecords() {
-    return VACCINE_RECORDS_MOCK;
+  getVaccineRecords(): Observable<VaccineRecord[]> {
+    return this.firestoreData.getVaccineRecords();
   }
 
-  getCampaigns() {
-    return CAMPAIGNS_MOCK;
+  getCampaigns(): Observable<Campaign[]> {
+    return this.firestoreData.getCampaigns();
+  }
+
+  getChildSummaries(): Observable<ChildSummary[]> {
+    return this.firestoreData.getChildSummaries();
+  }
+
+  getVaccinationRate(): Observable<number> {
+    return this.firestoreData.getVaccinationRate();
+  }
+
+  getOverdueCount(): Observable<number> {
+    return this.firestoreData.getOverdueCount();
   }
 }

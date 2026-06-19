@@ -1,0 +1,25 @@
+<article class="campaign-card">
+  <div class="campaign-card__header">
+    <div class="campaign-card__icon">
+      <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="24" />
+    </div>
+
+    <span class="campaign-card__badge">Ativa</span>
+  </div>
+
+  <h3>{{ campaign.title }}</h3>
+
+  <p>{{ campaign.description }}</p>
+
+  <div class="campaign-card__footer">
+    <span class="campaign-card__audience">
+      <app-svg-icon nome="bebe" cor="#ABC270" [tamanho]="16" />
+      {{ campaign.targetAudience }}
+    </span>
+
+    <span class="campaign-card__dates">
+      <app-svg-icon nome="calendario" cor="#6b625b" [tamanho]="16" />
+      {{ formatDate(campaign.startDate) }} — {{ formatDate(campaign.endDate) }}
+    </span>
+  </div>
+</article>

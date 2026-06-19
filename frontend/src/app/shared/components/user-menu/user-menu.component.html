@@ -1,0 +1,40 @@
+<div class="user-menu">
+  <button
+    type="button"
+    class="user-menu__trigger"
+    (click)="toggleMenu()"
+    aria-label="Abrir menu do usuário"
+    [attr.aria-expanded]="isOpen"
+  >
+    <app-svg-icon nome="usuario-circulo" cor="#473C33" [tamanho]="28" />
+  </button>
+
+  @if (isOpen) {
+    <div class="user-menu__dropdown">
+      @if (profile$ | async; as profile) {
+        <div class="user-menu__header">
+          <strong>{{ profile.displayName }}</strong>
+          <span>{{ profile.email }}</span>
+        </div>
+      }
+
+      <nav class="user-menu__nav">
+        @for (item of menuItems; track item.label) {
+          <button
+            type="button"
+            class="user-menu__item"
+            [class.user-menu__item--danger]="item.action === 'logout'"
+            (click)="onItemClick(item)"
+          >
+            <app-svg-icon
+              [nome]="item.icon"
+              [cor]="item.action === 'logout' ? '#FDA769' : '#473C33'"
+              [tamanho]="20"
+            />
+            {{ item.label }}
+          </button>
+        }
+      </nav>
+    </div>
+  }
+</div>

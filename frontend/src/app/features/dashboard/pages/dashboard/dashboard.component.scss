@@ -1,0 +1,147 @@
+.dashboard {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.welcome-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ion-color-primary) 22%, white) 0%,
+    color-mix(in srgb, var(--ion-color-secondary) 28%, white) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--ion-color-primary) 25%, var(--app-border));
+  overflow: hidden;
+  position: relative;
+}
+
+.welcome-banner__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 560px;
+  z-index: 1;
+}
+
+.welcome-banner__content h2 {
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  color: var(--app-text);
+}
+
+.welcome-banner__content p {
+  color: var(--app-text-light);
+  max-width: 48ch;
+}
+
+.welcome-banner__decoration {
+  opacity: 0.35;
+  flex-shrink: 0;
+}
+
+.alert-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--ion-color-warning) 14%, white);
+  border: 1px solid color-mix(in srgb, var(--ion-color-warning) 35%, transparent);
+
+  strong {
+    display: block;
+    color: var(--app-text);
+    margin-bottom: 4px;
+  }
+
+  p {
+    color: var(--app-text-light);
+    font-size: 0.9rem;
+  }
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-header h2 {
+  font-size: 1.35rem;
+  margin-bottom: 4px;
+}
+
+.section-header__subtitle {
+  color: var(--app-text-light);
+  font-size: 0.9rem;
+}
+
+.children-section,
+.campaigns-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.children-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.campaigns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 20px;
+    gap: 24px;
+  }
+
+  .welcome-banner {
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .welcome-banner__decoration {
+    position: absolute;
+    right: -8px;
+    bottom: -8px;
+    opacity: 0.2;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .summary-grid app-summary-card:last-child {
+    grid-column: 1 / -1;
+  }
+}

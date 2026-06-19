@@ -1,0 +1,114 @@
+.child-card {
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid var(--app-border);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.child-card__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.child-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--app-text);
+  background: color-mix(in srgb, var(--ion-color-secondary) 45%, white);
+  flex-shrink: 0;
+
+  &--female {
+    background: color-mix(in srgb, var(--ion-color-warning) 35%, white);
+  }
+}
+
+.child-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+
+  h3 {
+    font-size: 1.05rem;
+    color: var(--app-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    font-size: 0.875rem;
+    color: var(--app-text-light);
+  }
+}
+
+.child-card__progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  color: var(--app-text-light);
+
+  strong {
+    color: var(--app-text);
+    font-size: 0.9rem;
+  }
+}
+
+.child-card__progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ion-color-primary) 15%, var(--app-border));
+  overflow: hidden;
+}
+
+.child-card__progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--ion-color-primary), var(--ion-color-secondary));
+  transition: width 0.4s ease;
+}
+
+.child-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+
+  &--overdue {
+    color: var(--ion-color-warning);
+    background: color-mix(in srgb, var(--ion-color-warning) 18%, transparent);
+  }
+
+  &--pending {
+    color: #c4893f;
+    background: color-mix(in srgb, var(--ion-color-secondary) 25%, transparent);
+  }
+
+  &--ok {
+    color: var(--ion-color-primary);
+    background: color-mix(in srgb, var(--ion-color-primary) 18%, transparent);
+  }
+}
