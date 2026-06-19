@@ -1,0 +1,19 @@
+.header {
+    background: var(--app-surface);
+    border-bottom: 1px solid var(--app-border);
+    padding: 24px;
+  }
+  
+  .header-content {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    color: var(--app-text);
+    margin-bottom: 4px;
+  }
+  
+  p {
+    color: var(--app-text-light);
+  }
