@@ -1,2 +1,42 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+    --ion-color-primary: #ABC270;
+    --ion-color-primary-rgb: 171, 194, 112;
+    --ion-color-primary-contrast: #473C33;
+    --ion-color-primary-contrast-rgb: 71, 60, 51;
+    --ion-color-primary-shade: #97ab63;
+    --ion-color-primary-tint: #b3c97d;
+  
+    --ion-color-secondary: #FEC868;
+    --ion-color-secondary-rgb: 254, 200, 104;
+    --ion-color-secondary-contrast: #473C33;
+    --ion-color-secondary-contrast-rgb: 71, 60, 51;
+    --ion-color-secondary-shade: #e0b05c;
+    --ion-color-secondary-tint: #fed07a;
+  
+    --ion-color-warning: #FDA769;
+    --ion-color-warning-rgb: 253, 167, 105;
+    --ion-color-warning-contrast: #473C33;
+    --ion-color-warning-contrast-rgb: 71, 60, 51;
+    --ion-color-warning-shade: #df935d;
+    --ion-color-warning-tint: #fdb078;
+  
+    --ion-color-dark: #473C33;
+    --ion-color-dark-rgb: 71, 60, 51;
+    --ion-color-dark-contrast: #ffffff;
+    --ion-color-dark-contrast-rgb: 255, 255, 255;
+    --ion-color-dark-shade: #3e352d;
+    --ion-color-dark-tint: #5a5047;
+  
+    --app-background: #f8f9f4;
+    --app-surface: #ffffff;
+    --app-text: #473C33;
+    --app-text-light: #6b625b;
+    --app-border: #ece8e2;
+  
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+  
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
