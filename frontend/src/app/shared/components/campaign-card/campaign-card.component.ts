@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Campaign } from '../../interfaces/campaign.interface';
+import { isCampaignActive } from '../../utils/campaign.util';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 
 @Component({
@@ -13,6 +14,10 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 })
 export class CampaignCardComponent {
   @Input({ required: true }) campaign!: Campaign;
+
+  get isActive(): boolean {
+    return isCampaignActive(this.campaign);
+  }
 
   formatDate(date: Date): string {
     return new Intl.DateTimeFormat('pt-BR', {

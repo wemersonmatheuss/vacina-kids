@@ -1,0 +1,37 @@
+<div class="campaigns-list page-padding">
+  <header class="campaigns-list__header">
+    <div>
+      <h1>Campanhas de vacinação</h1>
+      <p>
+        Confira as campanhas disponíveis e acompanhe as oportunidades de vacinação
+        para o público infantil.
+      </p>
+    </div>
+  </header>
+
+  @if (activeCampaigns$ | async; as activeCampaigns) {
+    <section class="campaigns-list__summary">
+      <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="22" />
+      <span>
+        {{ activeCampaigns.length === 1
+          ? '1 campanha ativa no momento'
+          : activeCampaigns.length + ' campanhas ativas no momento' }}
+      </span>
+    </section>
+  }
+
+  @if (campaigns$ | async; as campaigns) {
+    @if (campaigns.length > 0) {
+      <div class="campaigns-list__grid">
+        @for (campaign of campaigns; track campaign.id) {
+          <app-campaign-card [campaign]="campaign" />
+        }
+      </div>
+    } @else {
+      <div class="campaigns-list__empty">
+        <app-svg-icon nome="megafone-anuncio" cor="#6b625b" [tamanho]="40" />
+        <p>Nenhuma campanha cadastrada no momento.</p>
+      </div>
+    }
+  }
+</div>

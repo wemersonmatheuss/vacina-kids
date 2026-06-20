@@ -14,6 +14,7 @@ import { Observable, combineLatest, from, map, of, switchMap } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { VaccineStatus } from '../../shared/enums/vaccine-status.enum';
+import { getActiveCampaigns } from '../../shared/utils/campaign.util';
 import { Campaign } from '../../shared/interfaces/campaign.interface';
 import { Child } from '../../shared/interfaces/child.interface';
 import { ChildFormData } from '../../shared/interfaces/child-form.interface';
@@ -125,6 +126,7 @@ export class FirestoreDataService {
               startDate: new Date(item['startDate']),
               endDate: new Date(item['endDate']),
               targetAudience: item['targetAudience'],
+              featured: item['featured'] ?? false,
             }) satisfies Campaign
         )
       )
@@ -206,7 +208,7 @@ export class FirestoreDataService {
       map(({ childSummaries, campaigns, pendingVaccines }) => ({
         totalChildren: childSummaries.length,
         pendingVaccines,
-        activeCampaigns: campaigns.length,
+        activeCampaigns: getActiveCampaigns(campaigns).length,
       }))
     );
   }

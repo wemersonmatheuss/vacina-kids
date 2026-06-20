@@ -4,7 +4,12 @@
       <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="24" />
     </div>
 
-    <span class="campaign-card__badge">Ativa</span>
+    <span
+      class="campaign-card__badge"
+      [class.campaign-card__badge--inactive]="!isActive"
+    >
+      {{ isActive ? 'Ativa' : 'Encerrada' }}
+    </span>
   </div>
 
   <h3>{{ campaign.title }}</h3>

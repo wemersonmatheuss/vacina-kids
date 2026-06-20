@@ -91,6 +91,7 @@ export class SeedService {
           startDate: campaign.startDate.toISOString(),
           endDate: campaign.endDate.toISOString(),
           targetAudience: campaign.targetAudience,
+          featured: campaign.featured ?? false,
         });
       }
 

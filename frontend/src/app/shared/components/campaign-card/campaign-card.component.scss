@@ -42,6 +42,11 @@
   background: var(--ion-color-primary);
   padding: 4px 10px;
   border-radius: 999px;
+
+  &--inactive {
+    color: var(--app-text-light);
+    background: color-mix(in srgb, var(--app-text-light) 20%, white);
+  }
 }
 
 .campaign-card h3 {
