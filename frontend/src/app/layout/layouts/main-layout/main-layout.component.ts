@@ -11,7 +11,7 @@ import { HeaderComponent } from '../../components/header/header.component';
     CommonModule,
     RouterOutlet,
     IonicModule,
-    HeaderComponent
+    HeaderComponent,
   ],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],

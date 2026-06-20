@@ -9,48 +9,55 @@
         Voltar para {{ details.child.name }}
       </a>
 
-      <section class="vaccine-details__header">
-        <div class="vaccine-details__icon" aria-hidden="true">
-          <app-svg-icon nome="check-escudo" cor="#473C33" [tamanho]="32" />
-        </div>
+      <div
+        class="vaccine-details__top-grid"
+        [class.vaccine-details__top-grid--single]="!details.record"
+      >
+        <section class="vaccine-details__header">
+          <div class="vaccine-details__icon" aria-hidden="true">
+            <app-svg-icon nome="check-escudo" cor="#473C33" [tamanho]="32" />
+          </div>
 
-        <div class="vaccine-details__heading">
-          <h1>{{ details.vaccine.name }}</h1>
-          @if (details.record) {
-            <app-vaccine-status-badge
-              [status]="getRecordBadgeType(details.record.status)"
-            />
-          }
-        </div>
-      </section>
-
-      <section class="vaccine-details__card">
-        <h2>Descrição</h2>
-        <p>{{ details.vaccine.description }}</p>
-      </section>
-
-      <section class="vaccine-details__card">
-        <h2>Faixa etária recomendada</h2>
-        <p>{{ formatRecommendedAge(details.vaccine.recommendedAgeInMonths) }}</p>
-      </section>
-
-      @if (details.record) {
-        <section class="vaccine-details__card">
-          <h2>Situação para {{ details.child.name }}</h2>
-
-          @if (details.record.appliedDate) {
-            <p>
-              Aplicada em
-              <strong>{{ formatVaccineDate(details.record.appliedDate) }}</strong>
-            </p>
-          } @else {
-            <p>
-              Prevista para
-              <strong>{{ formatVaccineDate(details.record.dueDate) }}</strong>
-            </p>
-          }
+          <div class="vaccine-details__heading">
+            <h1>{{ details.vaccine.name }}</h1>
+            @if (details.record) {
+              <app-vaccine-status-badge
+                [status]="getRecordBadgeType(details.record.status)"
+              />
+            }
+          </div>
         </section>
-      }
+
+        @if (details.record) {
+          <section class="vaccine-details__card vaccine-details__card--highlight">
+            <h2>Situação para {{ details.child.name }}</h2>
+
+            @if (details.record.appliedDate) {
+              <p>
+                Aplicada em
+                <strong>{{ formatVaccineDate(details.record.appliedDate) }}</strong>
+              </p>
+            } @else {
+              <p>
+                Prevista para
+                <strong>{{ formatVaccineDate(details.record.dueDate) }}</strong>
+              </p>
+            }
+          </section>
+        }
+      </div>
+
+      <div class="vaccine-details__info-grid">
+        <section class="vaccine-details__card">
+          <h2>Descrição</h2>
+          <p>{{ details.vaccine.description }}</p>
+        </section>
+
+        <section class="vaccine-details__card">
+          <h2>Faixa etária recomendada</h2>
+          <p>{{ formatRecommendedAge(details.vaccine.recommendedAgeInMonths) }}</p>
+        </section>
+      </div>
     </div>
   } @else {
     <div class="vaccine-details page-padding vaccine-details--empty">

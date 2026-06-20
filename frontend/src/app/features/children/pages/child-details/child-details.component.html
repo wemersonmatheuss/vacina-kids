@@ -6,44 +6,48 @@
         Voltar para crianças
       </a>
 
-      <section class="child-details__profile">
-        <div
-          class="child-details__avatar"
-          [class.child-details__avatar--female]="details.summary.child.gender === 'female'"
-        >
-          {{ getChildInitials(details.summary.child.name) }}
-        </div>
+      <div class="child-details__top-grid">
+        <section class="child-details__profile">
+          <div
+            class="child-details__avatar"
+            [class.child-details__avatar--female]="details.summary.child.gender === 'female'"
+          >
+            {{ getChildInitials(details.summary.child.name) }}
+          </div>
 
-        <div class="child-details__info">
-          <h1>{{ details.summary.child.name }}</h1>
-          <p>{{ getChildAgeLabel(details.summary.child.birthDate) }}</p>
-          <app-vaccine-status-badge
-            [status]="getVaccineStatusBadgeType(details.summary)"
+          <div class="child-details__info">
+            <h1>{{ details.summary.child.name }}</h1>
+            <p>{{ getChildAgeLabel(details.summary.child.birthDate) }}</p>
+            <app-vaccine-status-badge
+              [status]="getVaccineStatusBadgeType(details.summary)"
+            />
+          </div>
+        </section>
+
+        <section class="child-details__card">
+          <h2>Situação vacinal</h2>
+          <app-vaccination-progress-indicator
+            [percent]="getVaccinationProgressPercent(details.summary)"
+            label="Cobertura vacinal"
+            size="md"
           />
-        </div>
-      </section>
+          <p class="child-details__stats">
+            {{ details.summary.completedVaccines }} de {{ details.summary.totalVaccines }} vacinas concluídas
+          </p>
+        </section>
+      </div>
 
-      <section class="child-details__card">
-        <h2>Situação vacinal</h2>
-        <app-vaccination-progress-indicator
-          [percent]="getVaccinationProgressPercent(details.summary)"
-          label="Cobertura vacinal"
-          size="md"
+      <div class="child-details__vaccines-grid">
+        <app-vaccination-pending-status
+          [childId]="details.childId"
+          [records]="details.vaccineRecords"
         />
-        <p class="child-details__stats">
-          {{ details.summary.completedVaccines }} de {{ details.summary.totalVaccines }} vacinas concluídas
-        </p>
-      </section>
 
-      <app-vaccination-pending-status
-        [childId]="details.childId"
-        [records]="details.vaccineRecords"
-      />
-
-      <app-vaccination-timeline
-        [childId]="details.childId"
-        [records]="details.vaccineRecords"
-      />
+        <app-vaccination-timeline
+          [childId]="details.childId"
+          [records]="details.vaccineRecords"
+        />
+      </div>
 
       <section class="child-details__actions">
         <a
