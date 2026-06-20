@@ -1,0 +1,42 @@
+@if (childSummary$ | async; as summary) {
+  @if (summary) {
+    <div class="child-details page-padding">
+      <a routerLink="/criancas" class="child-details__back">
+        <app-svg-icon nome="seta-esquerda" cor="#473C33" [tamanho]="18" />
+        Voltar para crianças
+      </a>
+
+      <section class="child-details__profile">
+        <div
+          class="child-details__avatar"
+          [class.child-details__avatar--female]="summary.child.gender === 'female'"
+        >
+          {{ getChildInitials(summary.child.name) }}
+        </div>
+
+        <div class="child-details__info">
+          <h1>{{ summary.child.name }}</h1>
+          <p>{{ getChildAgeLabel(summary.child.birthDate) }}</p>
+          <app-vaccine-status-badge [status]="getVaccineStatusBadgeType(summary)" />
+        </div>
+      </section>
+
+      <section class="child-details__card">
+        <h2>Situação vacinal</h2>
+        <app-vaccination-progress-indicator
+          [percent]="getVaccinationProgressPercent(summary)"
+          label="Cobertura vacinal"
+          size="md"
+        />
+        <p class="child-details__stats">
+          {{ summary.completedVaccines }} de {{ summary.totalVaccines }} vacinas concluídas
+        </p>
+      </section>
+    </div>
+  } @else {
+    <div class="child-details page-padding child-details--empty">
+      <p>Criança não encontrada.</p>
+      <a routerLink="/criancas">Voltar para a listagem</a>
+    </div>
+  }
+}

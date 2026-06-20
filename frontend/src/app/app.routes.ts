@@ -62,6 +62,13 @@ export const routes: Routes = [
             './features/children/pages/children-list/children-list.component'
           ).then((m) => m.ChildrenListComponent),
       },
+      {
+        path: 'criancas/:id',
+        loadComponent: () =>
+          import(
+            './features/children/pages/child-details/child-details.component'
+          ).then((m) => m.ChildDetailsComponent),
+      },
     ],
   },
 ];
