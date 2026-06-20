@@ -56,6 +56,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'criancas/:childId/vacinas/:vaccineId',
+        loadComponent: () =>
+          import(
+            './features/vaccines/pages/vaccine-details/vaccine-details.component'
+          ).then((m) => m.VaccineDetailsComponent),
+      },
+      {
         path: 'criancas/nova',
         loadComponent: () =>
           import(
