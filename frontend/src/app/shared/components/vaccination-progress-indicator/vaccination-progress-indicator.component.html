@@ -1,0 +1,18 @@
+<div class="vaccination-progress" [class.vaccination-progress--sm]="size === 'sm'">
+  @if (showLabel) {
+    <div class="vaccination-progress__labels">
+      <span>{{ label }}</span>
+      <strong>{{ percent }}%</strong>
+    </div>
+  }
+
+  <div
+    class="vaccination-progress__bar"
+    role="progressbar"
+    [attr.aria-valuenow]="percent"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    <div class="vaccination-progress__fill" [style.width.%]="percent"></div>
+  </div>
+</div>

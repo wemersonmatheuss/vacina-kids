@@ -1,0 +1,50 @@
+.vaccination-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vaccination-progress__labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--app-text-light);
+
+  strong {
+    color: var(--app-text);
+    font-size: 0.95rem;
+  }
+}
+
+.vaccination-progress__bar {
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ion-color-primary) 15%, var(--app-border));
+  overflow: hidden;
+}
+
+.vaccination-progress__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--ion-color-primary),
+    var(--ion-color-secondary)
+  );
+  transition: width 0.4s ease;
+}
+
+.vaccination-progress--sm {
+  .vaccination-progress__bar {
+    height: 8px;
+  }
+
+  .vaccination-progress__labels {
+    font-size: 0.8rem;
+
+    strong {
+      font-size: 0.85rem;
+    }
+  }
+}

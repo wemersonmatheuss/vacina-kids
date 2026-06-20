@@ -26,31 +26,7 @@
       </div>
     }
 
-    <section class="summary-grid">
-      <app-summary-card
-        title="Crianças cadastradas"
-        [value]="data.childSummaries.length"
-        icon="bebe"
-        [accentColor]="colors.primary"
-        subtitle="Perfis individuais"
-      />
-
-      <app-summary-card
-        title="Campanhas ativas"
-        [value]="data.campaigns.length"
-        icon="megafone-anuncio"
-        [accentColor]="colors.secondary"
-        subtitle="Disponíveis agora"
-      />
-
-      <app-summary-card
-        title="Situação vacinal"
-        [value]="data.vaccinationRate + '%'"
-        icon="check-escudo"
-        [accentColor]="colors.warning"
-        subtitle="Média da família"
-      />
-    </section>
+    <app-family-summary [summary]="data.familySummary" />
 
     <section class="children-section">
       <div class="section-header">
@@ -64,7 +40,7 @@
 
       <div class="children-grid">
         @for (summary of data.childSummaries; track summary.child.id) {
-          <app-child-card [summary]="summary" />
+          <app-child-status-card [summary]="summary" />
         }
       </div>
     </section>
