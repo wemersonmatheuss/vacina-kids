@@ -1,0 +1,21 @@
+.family-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .family-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .family-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .family-summary app-summary-card:last-child {
+    grid-column: 1 / -1;
+  }
+}

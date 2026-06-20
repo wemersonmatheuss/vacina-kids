@@ -5,12 +5,13 @@ import {
   collectionData,
   query,
 } from '@angular/fire/firestore';
-import { Observable, map, of, switchMap } from 'rxjs';
+import { Observable, combineLatest, map, of, switchMap } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { VaccineStatus } from '../../shared/enums/vaccine-status.enum';
 import { Campaign } from '../../shared/interfaces/campaign.interface';
 import { Child } from '../../shared/interfaces/child.interface';
+import { FamilySummary } from '../../shared/interfaces/family-summary.interface';
 import { ChildSummary } from '../../shared/interfaces/child-summary.interface';
 import { Vaccine } from '../../shared/interfaces/vaccine.interface';
 import { VaccineRecord } from '../../shared/interfaces/vaccine-record.interface';
@@ -175,6 +176,39 @@ export class FirestoreDataService {
         (records) =>
           records.filter((record) => record.status === VaccineStatus.OVERDUE)
             .length
+      )
+    );
+  }
+
+  getPendingVaccinesCount(): Observable<number> {
+    return this.getVaccineRecords().pipe(
+      map(
+        (records) =>
+          records.filter((record) => record.status !== VaccineStatus.COMPLETED)
+            .length
+      )
+    );
+  }
+
+  getFamilySummary(): Observable<FamilySummary> {
+    return combineLatest({
+      childSummaries: this.getChildSummaries(),
+      campaigns: this.getCampaigns(),
+      pendingVaccines: this.getPendingVaccinesCount(),
+    }).pipe(
+      map(({ childSummaries, campaigns, pendingVaccines }) => ({
+        totalChildren: childSummaries.length,
+        pendingVaccines,
+        activeCampaigns: campaigns.length,
+      }))
+    );
+  }
+
+  getChildSummaryById(childId: string): Observable<ChildSummary | null> {
+    return this.getChildSummaries().pipe(
+      map(
+        (summaries) =>
+          summaries.find((summary) => summary.child.id === childId) ?? null
       )
     );
   }

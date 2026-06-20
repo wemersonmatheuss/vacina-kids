@@ -1,0 +1,25 @@
+<section class="family-summary">
+  <app-summary-card
+    title="Total de crianças"
+    [value]="summary.totalChildren"
+    icon="bebe"
+    [accentColor]="colors.primary"
+    subtitle="Cadastradas na família"
+  />
+
+  <app-summary-card
+    title="Vacinas pendentes"
+    [value]="summary.pendingVaccines"
+    icon="calendario"
+    [accentColor]="colors.warning"
+    subtitle="Aguardando aplicação"
+  />
+
+  <app-summary-card
+    title="Campanhas ativas"
+    [value]="summary.activeCampaigns"
+    icon="megafone-anuncio"
+    [accentColor]="colors.secondary"
+    subtitle="Disponíveis agora"
+  />
+</section>
