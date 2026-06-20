@@ -1,0 +1,65 @@
+<section class="vaccination-pending">
+  <h2 class="vaccination-pending__title">Pendências vacinais</h2>
+
+  @if (hasPendingItems) {
+    @if (overdueRecords.length > 0) {
+      <div class="vaccination-pending__group">
+        <h3 class="vaccination-pending__subtitle">
+          <app-svg-icon nome="documento-atencao" cor="#FDA769" [tamanho]="18" />
+          Vacinas atrasadas
+        </h3>
+
+        <ul class="vaccination-pending__list">
+          @for (record of overdueRecords; track record.id) {
+            <li class="vaccination-pending__item vaccination-pending__item--overdue">
+              <div class="vaccination-pending__info">
+                <a
+                  [routerLink]="['/criancas', childId, 'vacinas', record.vaccineId]"
+                  class="vaccination-pending__link"
+                >
+                  {{ record.vaccine.name }}
+                </a>
+                <p class="vaccination-pending__date">
+                  Prevista para {{ formatVaccineDate(record.dueDate) }}
+                </p>
+              </div>
+              <app-vaccine-status-badge [status]="getRecordBadgeType(record.status)" />
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    @if (futureRecords.length > 0) {
+      <div class="vaccination-pending__group">
+        <h3 class="vaccination-pending__subtitle">
+          <app-svg-icon nome="calendario" cor="#FEC868" [tamanho]="18" />
+          Próximas vacinas
+        </h3>
+
+        <ul class="vaccination-pending__list">
+          @for (record of futureRecords; track record.id) {
+            <li class="vaccination-pending__item">
+              <div class="vaccination-pending__info">
+                <a
+                  [routerLink]="['/criancas', childId, 'vacinas', record.vaccineId]"
+                  class="vaccination-pending__link"
+                >
+                  {{ record.vaccine.name }}
+                </a>
+                <p class="vaccination-pending__date">
+                  Prevista para {{ formatVaccineDate(record.dueDate) }}
+                </p>
+              </div>
+              <app-vaccine-status-badge [status]="getRecordBadgeType(record.status)" />
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  } @else {
+    <p class="vaccination-pending__empty">
+      Nenhuma pendência vacinal no momento.
+    </p>
+  }
+</section>

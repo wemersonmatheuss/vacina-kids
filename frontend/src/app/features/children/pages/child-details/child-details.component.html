@@ -35,6 +35,11 @@
         </p>
       </section>
 
+      <app-vaccination-pending-status
+        [childId]="details.childId"
+        [records]="details.vaccineRecords"
+      />
+
       <app-vaccination-timeline
         [childId]="details.childId"
         [records]="details.vaccineRecords"

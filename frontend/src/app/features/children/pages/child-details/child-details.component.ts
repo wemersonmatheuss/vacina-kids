@@ -13,6 +13,7 @@ import {
 import { VaccineStatusBadgeComponent } from '../../../../shared/components/vaccine-status-badge/vaccine-status-badge.component';
 import { VaccinationProgressIndicatorComponent } from '../../../../shared/components/vaccination-progress-indicator/vaccination-progress-indicator.component';
 import { VaccinationTimelineComponent } from '../../../../shared/components/vaccination-timeline/vaccination-timeline.component';
+import { VaccinationPendingStatusComponent } from '../../../../shared/components/vaccination-pending-status/vaccination-pending-status.component';
 import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-icon.component';
 
 @Component({
@@ -25,6 +26,7 @@ import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-ico
     VaccineStatusBadgeComponent,
     VaccinationProgressIndicatorComponent,
     VaccinationTimelineComponent,
+    VaccinationPendingStatusComponent,
     SvgIconComponent,
   ],
   templateUrl: './child-details.component.html',

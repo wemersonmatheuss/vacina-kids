@@ -1,0 +1,87 @@
+.vaccination-pending {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.vaccination-pending__title {
+  font-size: 1.15rem;
+}
+
+.vaccination-pending__group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vaccination-pending__subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: var(--app-text);
+}
+
+.vaccination-pending__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vaccination-pending__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--app-border);
+  background: color-mix(in srgb, var(--ion-color-secondary) 8%, white);
+
+  &--overdue {
+    border-color: color-mix(in srgb, var(--ion-color-warning) 35%, transparent);
+    background: color-mix(in srgb, var(--ion-color-warning) 10%, white);
+  }
+}
+
+.vaccination-pending__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vaccination-pending__link {
+  color: var(--app-text);
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--ion-color-primary);
+  }
+}
+
+.vaccination-pending__date {
+  color: var(--app-text-light);
+  font-size: 0.875rem;
+}
+
+.vaccination-pending__empty {
+  color: var(--app-text-light);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 767px) {
+  .vaccination-pending__item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
