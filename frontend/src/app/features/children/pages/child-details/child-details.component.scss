@@ -79,6 +79,42 @@
   font-size: 0.9rem;
 }
 
+.child-details__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.child-details__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+
+  &--edit {
+    border: 1px solid var(--app-border);
+    background: var(--app-surface);
+    color: var(--app-text);
+  }
+
+  &--delete {
+    border: 1px solid color-mix(in srgb, var(--ion-color-warning) 40%, transparent);
+    background: color-mix(in srgb, var(--ion-color-warning) 12%, white);
+    color: var(--app-text);
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
 .child-details--empty {
   text-align: center;
   color: var(--app-text-light);

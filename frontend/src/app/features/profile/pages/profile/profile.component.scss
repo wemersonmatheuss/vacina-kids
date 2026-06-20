@@ -1,5 +1,5 @@
 .profile {
-  max-width: 1280px;
+  max-width: 640px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -36,13 +36,49 @@
   color: var(--app-text-light);
 }
 
-.profile-info h2 {
-  font-size: 1.2rem;
-  margin-bottom: 6px;
+.profile-section {
+  padding: 24px;
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--shadow-sm);
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+
+  > p {
+    color: var(--app-text-light);
+    margin-bottom: 20px;
+  }
 }
 
-.profile-info p {
-  color: var(--app-text-light);
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-message {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+
+  &--error {
+    color: var(--ion-color-danger, #c0392b);
+  }
+
+  &--success {
+    color: var(--ion-color-primary);
+  }
+}
+
+.profile-submit {
+  width: fit-content;
+  --background: var(--ion-color-primary);
+  --color: var(--app-text);
+  font-weight: 700;
 }
 
 .logout-btn {

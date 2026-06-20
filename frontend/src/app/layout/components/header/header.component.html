@@ -1,15 +1,17 @@
 <header class="header">
   <div class="header-content">
-    <div class="header__brand">
+    <a routerLink="/dashboard" class="header__brand">
       <div class="header__logo">
         <app-svg-icon nome="check-escudo" cor="#473C33" [tamanho]="26" />
       </div>
 
       <div class="header__titles">
         <h1>{{ title }}</h1>
-        <p>{{ subtitle }}</p>
+        @if (profile$ | async; as profile) {
+          <p>Bem-vindo, {{ profile.displayName }}</p>
+        }
       </div>
-    </div>
+    </a>
 
     <app-user-menu />
   </div>

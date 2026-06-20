@@ -1,0 +1,91 @@
+<div class="child-form page-padding">
+  <a routerLink="/criancas" class="child-form__back">
+    <app-svg-icon nome="seta-esquerda" cor="#473C33" [tamanho]="18" />
+    Voltar para crianças
+  </a>
+
+  <header class="child-form__header">
+    <h1>{{ pageTitle }}</h1>
+    <p>
+      @if (isEditMode) {
+        Atualize os dados da criança. As alterações aparecem no dashboard automaticamente.
+      } @else {
+        Cadastre uma nova criança para acompanhar a vacinação da família.
+      }
+    </p>
+  </header>
+
+  @if (isLoadingChild) {
+    <div class="child-form__loading">
+      <ion-spinner name="crescent" />
+    </div>
+  } @else if (!errorMessage || form.valid) {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="child-form__form">
+      <app-form-field
+        label="Nome"
+        icon="bebe"
+        [invalid]="!!(form.controls.name.invalid && form.controls.name.touched)"
+        errorMessage="Informe o nome da criança"
+      >
+        <ion-input
+          type="text"
+          formControlName="name"
+          placeholder="Nome completo"
+          autocomplete="off"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Data de nascimento"
+        icon="calendario"
+        [invalid]="!!(form.controls.birthDate.invalid && form.controls.birthDate.touched)"
+        errorMessage="Informe a data de nascimento"
+      >
+        <input
+          class="child-form__date-input"
+          type="date"
+          formControlName="birthDate"
+          [max]="maxBirthDate"
+          aria-label="Data de nascimento"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Sexo"
+        icon="perfil"
+        [invalid]="!!(form.controls.gender.invalid && form.controls.gender.touched)"
+        errorMessage="Selecione o sexo"
+      >
+        <select class="child-form__select" formControlName="gender" aria-label="Sexo">
+          <option value="male">Masculino</option>
+          <option value="female">Feminino</option>
+        </select>
+      </app-form-field>
+
+      @if (errorMessage) {
+        <p class="child-form__error">{{ errorMessage }}</p>
+      }
+
+      <div class="child-form__actions">
+        <ion-button
+          type="submit"
+          class="child-form__submit"
+          [disabled]="isLoading"
+        >
+          @if (isLoading) {
+            <ion-spinner name="crescent" />
+          } @else {
+            {{ submitLabel }}
+          }
+        </ion-button>
+
+        <a routerLink="/criancas" class="child-form__cancel">Cancelar</a>
+      </div>
+    </form>
+  } @else {
+    <div class="child-form__not-found">
+      <p>{{ errorMessage }}</p>
+      <a routerLink="/criancas">Voltar para a listagem</a>
+    </div>
+  }
+</div>

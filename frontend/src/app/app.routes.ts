@@ -56,6 +56,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'criancas/nova',
+        loadComponent: () =>
+          import(
+            './features/children/pages/child-form/child-form.component'
+          ).then((m) => m.ChildFormComponent),
+        data: { mode: 'create' },
+      },
+      {
+        path: 'criancas/:id/editar',
+        loadComponent: () =>
+          import(
+            './features/children/pages/child-form/child-form.component'
+          ).then((m) => m.ChildFormComponent),
+        data: { mode: 'edit' },
+      },
+      {
         path: 'criancas',
         loadComponent: () =>
           import(

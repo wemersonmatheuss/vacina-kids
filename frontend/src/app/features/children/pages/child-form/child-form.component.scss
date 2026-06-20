@@ -1,0 +1,100 @@
+.child-form {
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.child-form__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--app-text);
+  font-weight: 700;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.child-form__header {
+  h1 {
+    font-size: clamp(1.35rem, 3vw, 1.5rem);
+    margin-bottom: 6px;
+  }
+
+  p {
+    color: var(--app-text-light);
+  }
+}
+
+.child-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.child-form__date-input,
+.child-form__select {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--app-text);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 0;
+  outline: none;
+  font-family: inherit;
+}
+
+.child-form__select {
+  cursor: pointer;
+}
+
+.child-form__error {
+  color: var(--ion-color-danger, #c0392b);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.child-form__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.child-form__submit {
+  --background: var(--ion-color-primary);
+  --color: var(--app-text);
+  font-weight: 700;
+}
+
+.child-form__cancel {
+  color: var(--app-text-light);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.child-form__loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.child-form__not-found {
+  text-align: center;
+  color: var(--app-text-light);
+
+  a {
+    color: var(--ion-color-primary);
+    font-weight: 700;
+    text-decoration: none;
+  }
+}

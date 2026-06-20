@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { combineLatest, map, startWith } from 'rxjs';
 
 import { FirestoreDataService } from '../../../../core/services/firestore-data.service';
@@ -15,6 +16,7 @@ import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-ico
     CommonModule,
     AsyncPipe,
     ReactiveFormsModule,
+    RouterLink,
     ChildStatusCardComponent,
     FormFieldComponent,
     SvgIconComponent,
@@ -26,6 +28,8 @@ export class ChildrenListComponent {
   private readonly firestoreData = inject(FirestoreDataService);
 
   readonly searchControl = new FormControl('', { nonNullable: true });
+
+  readonly allSummaries$ = this.firestoreData.getChildSummaries();
 
   readonly filteredSummaries$ = combineLatest([
     this.firestoreData.getChildSummaries(),

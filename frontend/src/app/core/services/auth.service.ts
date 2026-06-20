@@ -3,8 +3,11 @@ import {
   Auth,
   authState,
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword as firebaseUpdatePassword,
   updateProfile,
   User,
 } from '@angular/fire/auth';
@@ -97,6 +100,48 @@ export class AuthService {
 
   getAuthErrorMessage(error: unknown): string {
     return getAuthErrorMessage(error);
+  }
+
+  updateDisplayName(displayName: string): Observable<void> {
+    const user = this.auth.currentUser;
+
+    if (!user) {
+      throw new Error('Usuário não autenticado.');
+    }
+
+    return from(updateProfile(user, { displayName })).pipe(
+      switchMap(() =>
+        from(
+          setDoc(
+            doc(this.firestore, `users/${user.uid}`),
+            { displayName },
+            { merge: true }
+          )
+        )
+      ),
+      map(() => undefined)
+    );
+  }
+
+  updatePassword(
+    currentPassword: string,
+    newPassword: string
+  ): Observable<void> {
+    const user = this.auth.currentUser;
+
+    if (!user?.email) {
+      throw new Error('Usuário não autenticado.');
+    }
+
+    const credential = EmailAuthProvider.credential(
+      user.email,
+      currentPassword
+    );
+
+    return from(reauthenticateWithCredential(user, credential)).pipe(
+      switchMap(() => from(firebaseUpdatePassword(user, newPassword))),
+      map(() => undefined)
+    );
   }
 
   logout(): Observable<void> {

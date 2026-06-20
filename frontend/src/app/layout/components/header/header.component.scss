@@ -38,6 +38,21 @@
   align-items: center;
   gap: 14px;
   min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin: -4px;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--ion-color-primary) 10%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .header__logo {

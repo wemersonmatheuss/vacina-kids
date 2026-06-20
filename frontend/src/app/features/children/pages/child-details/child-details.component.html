@@ -32,6 +32,26 @@
           {{ summary.completedVaccines }} de {{ summary.totalVaccines }} vacinas concluídas
         </p>
       </section>
+
+      <section class="child-details__actions">
+        <a
+          [routerLink]="['/criancas', summary.child.id, 'editar']"
+          class="child-details__action child-details__action--edit"
+        >
+          <app-svg-icon nome="editar" cor="#473C33" [tamanho]="18" />
+          Editar
+        </a>
+
+        <button
+          type="button"
+          class="child-details__action child-details__action--delete"
+          [disabled]="isDeleting"
+          (click)="confirmDelete(summary.child.id, summary.child.name)"
+        >
+          <app-svg-icon nome="lixeira" cor="#FDA769" [tamanho]="18" />
+          {{ isDeleting ? 'Excluindo...' : 'Excluir' }}
+        </button>
+      </section>
     </div>
   } @else {
     <div class="child-details page-padding child-details--empty">

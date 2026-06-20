@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { FirestoreDataService } from '../../../../core/services/firestore-data.service';
@@ -30,7 +30,10 @@ import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-ico
 })
 export class ChildDetailsComponent {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly firestoreData = inject(FirestoreDataService);
+
+  isDeleting = false;
 
   readonly childSummary$ = this.route.paramMap.pipe(
     switchMap((params) => {
@@ -43,4 +46,28 @@ export class ChildDetailsComponent {
   getChildAgeLabel = getChildAgeLabel;
   getVaccinationProgressPercent = getVaccinationProgressPercent;
   getVaccineStatusBadgeType = getVaccineStatusBadgeType;
+
+  confirmDelete(childId: string, childName: string): void {
+    const confirmed = window.confirm(
+      `Tem certeza que deseja excluir ${childName}? Os registros vacinais desta criança também serão removidos.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.isDeleting = true;
+
+    this.firestoreData.deleteChild(childId).subscribe({
+      next: () => {
+        this.isDeleting = false;
+        this.router.navigate(['/criancas']);
+      },
+      error: (error) => {
+        this.isDeleting = false;
+        console.error('Erro ao excluir criança:', error);
+        window.alert('Não foi possível excluir a criança. Tente novamente.');
+      },
+    });
+  }
 }

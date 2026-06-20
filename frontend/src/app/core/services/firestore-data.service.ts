@@ -1,16 +1,22 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
+  addDoc,
   collection,
   collectionData,
-  query,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+  writeBatch,
 } from '@angular/fire/firestore';
-import { Observable, combineLatest, map, of, switchMap } from 'rxjs';
+import { Observable, combineLatest, from, map, of, switchMap } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { VaccineStatus } from '../../shared/enums/vaccine-status.enum';
 import { Campaign } from '../../shared/interfaces/campaign.interface';
 import { Child } from '../../shared/interfaces/child.interface';
+import { ChildFormData } from '../../shared/interfaces/child-form.interface';
 import { FamilySummary } from '../../shared/interfaces/family-summary.interface';
 import { ChildSummary } from '../../shared/interfaces/child-summary.interface';
 import { Vaccine } from '../../shared/interfaces/vaccine.interface';
@@ -211,5 +217,91 @@ export class FirestoreDataService {
           summaries.find((summary) => summary.child.id === childId) ?? null
       )
     );
+  }
+
+  getChildById(childId: string): Observable<Child | null> {
+    return this.getChildren().pipe(
+      map((children) => children.find((child) => child.id === childId) ?? null)
+    );
+  }
+
+  addChild(data: ChildFormData): Observable<string> {
+    return from(this.addChildAsync(data));
+  }
+
+  updateChild(childId: string, data: ChildFormData): Observable<void> {
+    return from(this.updateChildAsync(childId, data));
+  }
+
+  deleteChild(childId: string): Observable<void> {
+    return from(this.deleteChildAsync(childId));
+  }
+
+  private async addChildAsync(data: ChildFormData): Promise<string> {
+    const userId = this.authService.getCurrentUserId();
+
+    if (!userId) {
+      throw new Error('Usuário não autenticado.');
+    }
+
+    const childrenRef = collection(
+      this.firestore,
+      `users/${userId}/children`
+    );
+
+    const docRef = await addDoc(childrenRef, {
+      name: data.name.trim(),
+      birthDate: new Date(data.birthDate).toISOString(),
+      gender: data.gender,
+      photoUrl: null,
+    });
+
+    return docRef.id;
+  }
+
+  private async updateChildAsync(
+    childId: string,
+    data: ChildFormData
+  ): Promise<void> {
+    const userId = this.authService.getCurrentUserId();
+
+    if (!userId) {
+      throw new Error('Usuário não autenticado.');
+    }
+
+    const childRef = doc(this.firestore, `users/${userId}/children/${childId}`);
+
+    await updateDoc(childRef, {
+      name: data.name.trim(),
+      birthDate: new Date(data.birthDate).toISOString(),
+      gender: data.gender,
+    });
+  }
+
+  private async deleteChildAsync(childId: string): Promise<void> {
+    const userId = this.authService.getCurrentUserId();
+
+    if (!userId) {
+      throw new Error('Usuário não autenticado.');
+    }
+
+    const batch = writeBatch(this.firestore);
+    const recordsRef = collection(
+      this.firestore,
+      `users/${userId}/vaccineRecords`
+    );
+    const recordsSnapshot = await getDocs(recordsRef);
+
+    recordsSnapshot.forEach((recordDoc) => {
+      if (recordDoc.data()['childId'] === childId) {
+        batch.delete(recordDoc.ref);
+      }
+    });
+
+    batch.delete(
+      doc(this.firestore, `users/${userId}/children/${childId}`)
+    );
+
+    await batch.commit();
   }
 }

@@ -30,6 +30,8 @@ export function getAuthErrorMessage(error: unknown): string {
     'auth/invalid-credential': 'E-mail ou senha inválidos.',
     'auth/user-not-found': 'Usuário não encontrado.',
     'auth/wrong-password': 'Senha incorreta.',
+    'auth/requires-recent-login':
+      'Por segurança, confirme sua senha atual para continuar.',
     'auth/too-many-requests': 'Muitas tentativas. Aguarde e tente novamente.',
     'auth/network-request-failed':
       'Falha de conexão. Verifique sua internet.',

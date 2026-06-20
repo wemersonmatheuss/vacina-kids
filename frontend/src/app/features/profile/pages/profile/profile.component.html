@@ -11,9 +11,118 @@
       </div>
     </section>
 
-    <section class="profile-info">
-      <h2>Dados da conta</h2>
-      <p>Gerencie suas informações e preferências de acompanhamento vacinal.</p>
+    <section class="profile-section">
+      <h2>Alterar nome</h2>
+      <p>Atualize como seu nome aparece no app.</p>
+
+      <form [formGroup]="nameForm" (ngSubmit)="saveName()" class="profile-form">
+        <app-form-field
+          label="Nome"
+          icon="perfil"
+          [invalid]="!!(nameForm.controls.displayName.invalid && nameForm.controls.displayName.touched)"
+          errorMessage="Informe um nome com pelo menos 2 caracteres"
+        >
+          <ion-input
+            type="text"
+            formControlName="displayName"
+            placeholder="Seu nome"
+            autocomplete="name"
+          />
+        </app-form-field>
+
+        @if (nameErrorMessage) {
+          <p class="profile-message profile-message--error">{{ nameErrorMessage }}</p>
+        }
+
+        @if (nameSuccessMessage) {
+          <p class="profile-message profile-message--success">{{ nameSuccessMessage }}</p>
+        }
+
+        <ion-button
+          type="submit"
+          class="profile-submit"
+          [disabled]="isSavingName"
+        >
+          @if (isSavingName) {
+            <ion-spinner name="crescent" />
+          } @else {
+            Salvar nome
+          }
+        </ion-button>
+      </form>
+    </section>
+
+    <section class="profile-section">
+      <h2>Alterar senha</h2>
+      <p>Informe a senha atual e escolha uma nova senha.</p>
+
+      <form
+        [formGroup]="passwordForm"
+        (ngSubmit)="savePassword()"
+        class="profile-form"
+      >
+        <app-form-field
+          label="Senha atual"
+          icon="cadeado"
+          [invalid]="!!(passwordForm.controls.currentPassword.invalid && passwordForm.controls.currentPassword.touched)"
+          errorMessage="Informe sua senha atual"
+        >
+          <ion-input
+            type="password"
+            formControlName="currentPassword"
+            placeholder="Senha atual"
+            autocomplete="current-password"
+          />
+        </app-form-field>
+
+        <app-form-field
+          label="Nova senha"
+          icon="cadeado"
+          [invalid]="!!(passwordForm.controls.newPassword.invalid && passwordForm.controls.newPassword.touched)"
+          errorMessage="A senha deve ter pelo menos 6 caracteres"
+        >
+          <ion-input
+            type="password"
+            formControlName="newPassword"
+            placeholder="Mínimo 6 caracteres"
+            autocomplete="new-password"
+          />
+        </app-form-field>
+
+        <app-form-field
+          label="Confirmar nova senha"
+          icon="cadeado"
+          [invalid]="!!(passwordForm.invalid && passwordForm.touched && passwordForm.errors?.['passwordMismatch'])"
+          errorMessage="As senhas não coincidem"
+        >
+          <ion-input
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="Repita a nova senha"
+            autocomplete="new-password"
+          />
+        </app-form-field>
+
+        @if (passwordErrorMessage) {
+          <p class="profile-message profile-message--error">{{ passwordErrorMessage }}</p>
+        }
+
+        @if (passwordSuccessMessage) {
+          <p class="profile-message profile-message--success">{{ passwordSuccessMessage }}</p>
+        }
+
+        <ion-button
+          type="submit"
+          class="profile-submit"
+          [disabled]="isSavingPassword"
+        >
+          @if (isSavingPassword) {
+            <ion-spinner name="crescent" />
+          } @else {
+            Alterar senha
+          }
+        </ion-button>
+      </form>
     </section>
   }
 
