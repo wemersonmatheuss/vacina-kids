@@ -1,6 +1,7 @@
 .auth-form {
   width: 100%;
   max-width: 420px;
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -8,6 +9,7 @@
 
 .auth-form__header {
   margin-bottom: 4px;
+  text-align: center;
 }
 
 .auth-form__header h1 {

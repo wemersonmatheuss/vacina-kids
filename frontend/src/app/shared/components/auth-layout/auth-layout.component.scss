@@ -108,8 +108,9 @@
 .auth-layout__form {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   min-height: 100dvh;
   padding: 40px 32px calc(40px + env(safe-area-inset-bottom));
   background: var(--app-background);
@@ -118,8 +119,11 @@
 .auth-layout__mobile-brand {
   display: none;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 24px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 24px;
   font-size: 1.05rem;
   font-weight: 800;
   color: var(--app-text);
@@ -129,6 +133,7 @@
   .auth-layout {
     grid-template-columns: 1fr;
     min-height: auto;
+    width: 100%;
   }
 
   .auth-layout__visual {
@@ -136,10 +141,12 @@
   }
 
   .auth-layout__mobile-brand {
-    display: inline-flex;
+    display: flex;
   }
 
   .auth-layout__form {
+    align-items: center;
+    justify-content: flex-start;
     min-height: auto;
     padding: 24px 20px calc(32px + env(safe-area-inset-bottom));
   }
