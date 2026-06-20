@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 
 import { FirestoreDataService } from '../../../../core/services/firestore-data.service';
@@ -17,6 +18,7 @@ import {
   imports: [
     CommonModule,
     AsyncPipe,
+    RouterLink,
     CampaignCardComponent,
     FeaturedCampaignBannerComponent,
     SvgIconComponent,

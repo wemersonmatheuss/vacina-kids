@@ -6,6 +6,16 @@
   gap: 24px;
 }
 
+.children-list__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--app-text);
+  font-weight: 700;
+  text-decoration: none;
+  width: fit-content;
+}
+
 .children-list__header {
   display: flex;
   align-items: flex-start;

@@ -56,6 +56,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'campanhas/:id',
+        loadComponent: () =>
+          import(
+            './features/campaigns/pages/campaign-details/campaign-details.component'
+          ).then((m) => m.CampaignDetailsComponent),
+      },
+      {
         path: 'campanhas',
         loadComponent: () =>
           import(

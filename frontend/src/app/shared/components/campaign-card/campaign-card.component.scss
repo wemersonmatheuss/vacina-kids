@@ -9,6 +9,9 @@
   border: 1px solid var(--app-border);
   border-left: 4px solid var(--ion-color-secondary);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 
   &:hover {
     box-shadow: var(--shadow-md);

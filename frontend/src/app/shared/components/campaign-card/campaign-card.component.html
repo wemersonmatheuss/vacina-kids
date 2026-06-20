@@ -1,4 +1,12 @@
-<article class="campaign-card">
+<article
+  class="campaign-card"
+  role="link"
+  tabindex="0"
+  aria-label="Ver detalhes da campanha"
+  (click)="openDetails()"
+  (keydown.enter)="openDetails()"
+  (keydown.space)="openDetails(); $event.preventDefault()"
+>
   <div class="campaign-card__header">
     <div class="campaign-card__icon">
       <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="24" />

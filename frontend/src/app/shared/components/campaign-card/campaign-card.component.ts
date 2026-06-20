@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { Campaign } from '../../interfaces/campaign.interface';
 import { isCampaignActive } from '../../utils/campaign.util';
@@ -14,6 +15,7 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 })
 export class CampaignCardComponent {
   @Input({ required: true }) campaign!: Campaign;
+  private readonly router = inject(Router);
 
   get isActive(): boolean {
     return isCampaignActive(this.campaign);
@@ -24,5 +26,9 @@ export class CampaignCardComponent {
       day: '2-digit',
       month: 'short',
     }).format(date);
+  }
+
+  openDetails(): void {
+    this.router.navigate(['/campanhas', this.campaign.id]);
   }
 }

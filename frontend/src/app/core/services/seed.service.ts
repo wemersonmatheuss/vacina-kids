@@ -24,7 +24,8 @@ export class SeedService {
   seedUserDataIfNeeded(userId: string): Observable<void> {
     const childrenRef = collection(this.firestore, `users/${userId}/children`);
 
-    return from(getDocs(childrenRef)).pipe(
+    return from(this.seedGlobalDataIfNeeded()).pipe(
+      switchMap(() => from(getDocs(childrenRef))),
       switchMap((snapshot) => {
         if (!snapshot.empty) {
           return from(Promise.resolve());
@@ -36,8 +37,6 @@ export class SeedService {
   }
 
   private async seedUserCollections(userId: string): Promise<void> {
-    await this.seedGlobalDataIfNeeded();
-
     const batch = writeBatch(this.firestore);
 
     for (const child of CHILDREN_MOCK) {
@@ -83,20 +82,26 @@ export class SeedService {
         });
       }
 
-      for (const campaign of CAMPAIGNS_MOCK) {
-        const campaignRef = doc(this.firestore, `campaigns/${campaign.id}`);
-        batch.set(campaignRef, {
-          title: campaign.title,
-          description: campaign.description,
-          startDate: campaign.startDate.toISOString(),
-          endDate: campaign.endDate.toISOString(),
-          targetAudience: campaign.targetAudience,
-          featured: campaign.featured ?? false,
-        });
-      }
-
       batch.set(vaccinesRef, { seeded: true });
       await batch.commit();
     }
+
+    // Mantém campanhas globais sempre predefinidas no deploy:
+    // uma ativa e uma encerrada, independente do usuário que logar.
+    const campaignsBatch = writeBatch(this.firestore);
+
+    for (const campaign of CAMPAIGNS_MOCK) {
+      const campaignRef = doc(this.firestore, `campaigns/${campaign.id}`);
+      campaignsBatch.set(campaignRef, {
+        title: campaign.title,
+        description: campaign.description,
+        startDate: campaign.startDate.toISOString(),
+        endDate: campaign.endDate.toISOString(),
+        targetAudience: campaign.targetAudience,
+        featured: campaign.featured ?? false,
+      });
+    }
+
+    await campaignsBatch.commit();
   }
 }

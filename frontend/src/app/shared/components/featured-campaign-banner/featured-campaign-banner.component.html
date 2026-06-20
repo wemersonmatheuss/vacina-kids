@@ -1,23 +1,29 @@
 <section class="featured-campaign-banner">
   <div class="featured-campaign-banner__content">
-    <span class="featured-campaign-banner__label">
-      <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="18" />
-      Campanha em destaque
-    </span>
-
-    <h2>{{ campaign.title }}</h2>
-    <p>{{ campaign.description }}</p>
-
-    <div class="featured-campaign-banner__meta">
-      <span>
-        <app-svg-icon nome="bebe" cor="#473C33" [tamanho]="16" />
-        {{ campaign.targetAudience }}
+    <a
+      [routerLink]="['/campanhas', campaign.id]"
+      class="featured-campaign-banner__content-link"
+      aria-label="Ver detalhes da campanha em destaque"
+    >
+      <span class="featured-campaign-banner__label">
+        <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="18" />
+        Campanha em destaque
       </span>
-      <span>
-        <app-svg-icon nome="calendario" cor="#473C33" [tamanho]="16" />
-        Até {{ formatDate(campaign.endDate) }}
-      </span>
-    </div>
+
+      <h2>{{ campaign.title }}</h2>
+      <p>{{ campaign.description }}</p>
+
+      <div class="featured-campaign-banner__meta">
+        <span>
+          <app-svg-icon nome="bebe" cor="#473C33" [tamanho]="16" />
+          {{ campaign.targetAudience }}
+        </span>
+        <span>
+          <app-svg-icon nome="calendario" cor="#473C33" [tamanho]="16" />
+          Até {{ formatDate(campaign.endDate) }}
+        </span>
+      </div>
+    </a>
 
     @if (showLink) {
       <a routerLink="/campanhas" class="featured-campaign-banner__link">

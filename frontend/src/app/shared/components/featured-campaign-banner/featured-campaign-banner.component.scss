@@ -24,6 +24,16 @@
   z-index: 1;
 }
 
+.featured-campaign-banner__content-link {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+  z-index: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
 .featured-campaign-banner__label {
   display: inline-flex;
   align-items: center;

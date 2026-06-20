@@ -133,6 +133,15 @@ export class FirestoreDataService {
     );
   }
 
+  getCampaignById(campaignId: string): Observable<Campaign | null> {
+    return this.getCampaigns().pipe(
+      map(
+        (campaigns) =>
+          campaigns.find((campaign) => campaign.id === campaignId) ?? null
+      )
+    );
+  }
+
   getChildSummaries(): Observable<ChildSummary[]> {
     return this.getChildren().pipe(
       switchMap((children) =>

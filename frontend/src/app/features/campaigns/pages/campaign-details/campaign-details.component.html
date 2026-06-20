@@ -1,0 +1,53 @@
+@if (campaign$ | async; as campaign) {
+  @if (campaign) {
+    <div class="campaign-details page-padding">
+      <a routerLink="/campanhas" class="campaign-details__back">
+        <app-svg-icon nome="seta-esquerda" cor="#473C33" [tamanho]="18" />
+        Voltar para campanhas
+      </a>
+
+      <div class="campaign-details__top-grid">
+        <section class="campaign-details__header">
+          <div class="campaign-details__icon" aria-hidden="true">
+            <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="28" />
+          </div>
+
+          <div class="campaign-details__heading">
+            <h1>{{ campaign.title }}</h1>
+            <span
+              class="campaign-details__status"
+              [class.campaign-details__status--active]="isActive(campaign)"
+            >
+              {{ isActive(campaign) ? 'Ativa' : 'Encerrada' }}
+            </span>
+          </div>
+        </section>
+
+        <section class="campaign-details__card">
+          <h2>Descrição</h2>
+          <p>{{ campaign.description }}</p>
+        </section>
+      </div>
+
+      <section class="campaign-details__card campaign-details__card--grid">
+        <div>
+          <h2>Período</h2>
+          <p>
+            {{ formatDate(campaign.startDate) }} — {{ formatDate(campaign.endDate) }}
+          </p>
+        </div>
+
+        <div>
+          <h2>Público-alvo</h2>
+          <p>{{ campaign.targetAudience }}</p>
+        </div>
+      </section>
+    </div>
+  } @else {
+    <div class="campaign-details page-padding campaign-details--empty">
+      <p>Campanha não encontrada.</p>
+      <a routerLink="/campanhas" class="campaign-details__back">Voltar para campanhas</a>
+    </div>
+  }
+}
+
