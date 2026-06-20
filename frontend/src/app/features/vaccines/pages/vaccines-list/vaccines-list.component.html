@@ -1,0 +1,31 @@
+<div class="vaccines-list page-padding">
+  <header class="vaccines-list__header">
+    <h1>Vacinas</h1>
+    <p>Calendário vacinal com orientações por faixa etária.</p>
+  </header>
+
+  @if (vaccines$ | async; as vaccines) {
+    @if (vaccines.length > 0) {
+      <div class="vaccines-list__grid">
+        @for (vaccine of vaccines; track vaccine.id) {
+          <article class="vaccines-list__card">
+            <div class="vaccines-list__card-header">
+              <h2>{{ vaccine.name }}</h2>
+              <span class="vaccines-list__age">
+                {{ formatRecommendedAge(vaccine.recommendedAgeInMonths) }}
+              </span>
+            </div>
+
+            <p>{{ vaccine.description }}</p>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="vaccines-list__empty">
+        <app-svg-icon nome="check-escudo" cor="#6b625b" [tamanho]="40" />
+        <p>Nenhuma vacina cadastrada no momento.</p>
+      </div>
+    }
+  }
+</div>
+

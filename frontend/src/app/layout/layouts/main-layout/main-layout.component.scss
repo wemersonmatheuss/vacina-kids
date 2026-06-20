@@ -6,4 +6,50 @@
 .content {
   width: 100%;
   min-height: calc(100vh - 109px);
+  padding-bottom: 84px;
+}
+
+.mobile-bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--app-surface) 94%, white);
+  border-top: 1px solid var(--app-border);
+  box-shadow: 0 -8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.mobile-bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--app-text-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+}
+
+.mobile-bottom-nav__item--active {
+  color: var(--app-text);
+  background: color-mix(in srgb, var(--ion-color-primary) 14%, white);
+}
+
+@media (min-width: 992px) {
+  .content {
+    padding-bottom: 24px;
+  }
+
+  .mobile-bottom-nav__item {
+    max-width: 140px;
+    margin: 0 auto;
+  }
 }

@@ -5,5 +5,19 @@
     <main class="content">
       <router-outlet />
     </main>
+
+    <nav class="mobile-bottom-nav" aria-label="Navegação principal mobile">
+      @for (item of navigationItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="mobile-bottom-nav__item--active"
+          [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+          class="mobile-bottom-nav__item"
+        >
+          <app-svg-icon [nome]="item.icon" cor="#473C33" [tamanho]="20" />
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
   </div>
 </ion-content>

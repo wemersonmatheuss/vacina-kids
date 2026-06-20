@@ -63,6 +63,13 @@ export const routes: Routes = [
           ).then((m) => m.CampaignDetailsComponent),
       },
       {
+        path: 'vacinas',
+        loadComponent: () =>
+          import(
+            './features/vaccines/pages/vaccines-list/vaccines-list.component'
+          ).then((m) => m.VaccinesListComponent),
+      },
+      {
         path: 'campanhas',
         loadComponent: () =>
           import(

@@ -25,6 +25,7 @@ export class UserMenuComponent {
   readonly menuItems: UserMenuItem[] = [
     { label: 'Perfil', icon: 'perfil', route: '/perfil' },
     { label: 'Crianças', icon: 'bebe', route: '/criancas' },
+    { label: 'Vacinas', icon: 'calendario', route: '/vacinas' },
     { label: 'Campanhas', icon: 'megafone-anuncio', route: '/campanhas' },
     { label: 'Sair', icon: 'sair', action: 'logout' },
   ];
