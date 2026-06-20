@@ -304,8 +304,6 @@ Desenvolvedor Full Stack
 
 GitHub: https://github.com/wemersonmatheuss
 
-LinkedIn: *(adicionar se desejar)*
-
 ---
 
 ## 📄 Licença
