@@ -1,0 +1,52 @@
+<article
+  class="child-status-card"
+  [class.child-status-card--clickable]="linkToDetails"
+>
+  @if (linkToDetails) {
+    <a class="child-status-card__body" [routerLink]="['/criancas', summary.child.id]">
+      <div class="child-status-card__header">
+        <div
+          class="child-status-card__avatar"
+          [class.child-status-card__avatar--female]="summary.child.gender === 'female'"
+        >
+          {{ initials }}
+        </div>
+
+        <div class="child-status-card__info">
+          <h3>{{ summary.child.name }}</h3>
+          <span>{{ ageLabel }}</span>
+        </div>
+      </div>
+
+      <app-vaccination-progress-indicator
+        [percent]="progressPercent"
+        label="Situação vacinal"
+      />
+
+      <app-vaccine-status-badge [status]="statusType" />
+    </a>
+  } @else {
+    <div class="child-status-card__body">
+      <div class="child-status-card__header">
+        <div
+          class="child-status-card__avatar"
+          [class.child-status-card__avatar--female]="summary.child.gender === 'female'"
+        >
+          {{ initials }}
+        </div>
+
+        <div class="child-status-card__info">
+          <h3>{{ summary.child.name }}</h3>
+          <span>{{ ageLabel }}</span>
+        </div>
+      </div>
+
+      <app-vaccination-progress-indicator
+        [percent]="progressPercent"
+        label="Situação vacinal"
+      />
+
+      <app-vaccine-status-badge [status]="statusType" />
+    </div>
+  }
+</article>

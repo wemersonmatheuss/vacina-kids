@@ -1,0 +1,64 @@
+.child-status-card {
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--app-border);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  overflow: hidden;
+
+  &--clickable:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.child-status-card__link,
+.child-status-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.child-status-card__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.child-status-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--app-text);
+  background: color-mix(in srgb, var(--ion-color-secondary) 45%, white);
+  flex-shrink: 0;
+
+  &--female {
+    background: color-mix(in srgb, var(--ion-color-warning) 35%, white);
+  }
+}
+
+.child-status-card__info {
+  min-width: 0;
+
+  h3 {
+    font-size: 1.05rem;
+    color: var(--app-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    font-size: 0.875rem;
+    color: var(--app-text-light);
+  }
+}
