@@ -1,0 +1,19 @@
+<div class="empty-state" [class.empty-state--compact]="compact">
+  <app-svg-icon
+    [nome]="icon"
+    cor="#6b625b"
+    [tamanho]="compact ? 32 : 40"
+  />
+
+  <h3>{{ title }}</h3>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (actionLabel && actionRoute) {
+    <a [routerLink]="actionRoute" class="empty-state__action">
+      {{ actionLabel }}
+    </a>
+  }
+</div>

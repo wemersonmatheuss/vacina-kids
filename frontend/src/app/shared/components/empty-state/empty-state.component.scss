@@ -1,0 +1,41 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--app-text-light);
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--app-border);
+
+  h3 {
+    color: var(--app-text);
+    font-size: 1.05rem;
+  }
+
+  p {
+    max-width: 42ch;
+    line-height: 1.5;
+  }
+}
+
+.empty-state--compact {
+  padding: 32px 20px;
+  gap: 10px;
+
+  h3 {
+    font-size: 0.98rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+.empty-state__action {
+  color: var(--ion-color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
