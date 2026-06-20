@@ -28,9 +28,15 @@ interface NavigationItem {
 })
 export class MainLayoutComponent {
   readonly navigationItems: NavigationItem[] = [
-    { label: 'Dashboard', icon: 'check-escudo', route: '/dashboard' },
+    { label: 'Início', icon: 'check-escudo', route: '/inicio' },
     { label: 'Crianças', icon: 'bebe', route: '/criancas' },
     { label: 'Vacinas', icon: 'calendario', route: '/vacinas' },
     { label: 'Campanhas', icon: 'megafone-anuncio', route: '/campanhas' },
   ];
+
+  sidebarCollapsed = false;
+
+  toggleSidebar(): void {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
 }

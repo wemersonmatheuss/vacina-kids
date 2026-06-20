@@ -3,14 +3,22 @@
   background: var(--app-background);
 }
 
-.layout-shell {
+ion-content.main-layout-content {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.layout-body {
   display: flex;
+  align-items: flex-start;
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
 }
 
 .desktop-sidebar {
+  display: none;
+}
+
+.desktop-sidebar__toggle {
   display: none;
 }
 
@@ -18,16 +26,17 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 24px 12px 24px 0;
+  padding: 16px 12px 24px;
   position: sticky;
   top: 0;
 }
 
 .desktop-sidebar__link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 14px;
+  width: 100%;
+  padding: 12px 10px;
   border-radius: var(--radius-sm);
   text-decoration: none;
   color: var(--app-text);
@@ -41,13 +50,28 @@
   }
 }
 
+.desktop-sidebar__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.desktop-sidebar__label {
+  overflow: hidden;
+  transition: opacity 0.15s ease;
+}
+
 .desktop-sidebar__link--active {
   background: color-mix(in srgb, var(--ion-color-primary) 16%, white);
   border-color: color-mix(in srgb, var(--ion-color-primary) 30%, transparent);
 }
 
-.content {
+.layout-main {
   width: 100%;
+  min-width: 0;
   min-height: calc(100vh - 109px);
   padding-bottom: 84px;
 }
@@ -88,12 +112,69 @@
 
 @media (min-width: 992px) {
   .desktop-sidebar {
-    display: block;
-    width: 220px;
-    flex: 0 0 220px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 200px;
+    min-height: calc(100vh - 109px);
+    border-right: 1px solid var(--app-border);
+    background: var(--app-background);
+    transition: width 0.2s ease;
   }
 
-  .content {
+  .desktop-sidebar__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    margin: 12px 12px 0 0;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.15s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ion-color-primary);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  .desktop-sidebar--collapsed {
+    width: 64px;
+
+    .desktop-sidebar__toggle {
+      align-self: center;
+      margin: 12px 0 0;
+      transform: rotate(180deg);
+    }
+
+    .desktop-sidebar__nav {
+      padding: 16px 0 24px;
+      align-items: center;
+    }
+
+    .desktop-sidebar__link {
+      justify-content: center;
+      align-items: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      gap: 0;
+    }
+
+    .desktop-sidebar__label {
+      display: none;
+    }
+  }
+
+  .layout-main {
+    flex: 1;
     padding-bottom: 24px;
   }
 

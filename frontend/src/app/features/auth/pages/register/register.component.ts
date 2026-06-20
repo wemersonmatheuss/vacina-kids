@@ -65,7 +65,7 @@ export class RegisterComponent {
     this.authService.register(email, password, displayName).subscribe({
       next: () => {
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/inicio']);
       },
       error: (error) => {
         this.isLoading = false;

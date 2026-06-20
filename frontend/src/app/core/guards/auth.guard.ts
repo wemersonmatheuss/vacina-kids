@@ -19,6 +19,6 @@ export const guestGuard: CanActivateFn = () => {
 
   return authService.user$.pipe(
     take(1),
-    map((user) => (user ? router.createUrlTree(['/dashboard']) : true))
+    map((user) => (user ? router.createUrlTree(['/inicio']) : true))
   );
 };

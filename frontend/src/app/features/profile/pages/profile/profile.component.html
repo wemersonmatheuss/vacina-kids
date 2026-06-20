@@ -1,21 +1,22 @@
 <div class="profile page-padding">
   @if (profile$ | async; as profile) {
-    <section class="profile-card">
-      <div class="profile-card__avatar">
-        <app-svg-icon nome="perfil" cor="#473C33" [tamanho]="36" />
-      </div>
+    <div class="profile__cards-grid">
+      <section class="profile-card">
+        <div class="profile-card__avatar">
+          <app-svg-icon nome="perfil" cor="#473C33" [tamanho]="36" />
+        </div>
 
-      <div>
-        <h1>{{ profile.displayName }}</h1>
-        <p>{{ profile.email }}</p>
-      </div>
-    </section>
+        <div>
+          <h1>{{ profile.displayName }}</h1>
+          <p>{{ profile.email }}</p>
+        </div>
+      </section>
 
-    <section class="profile-section">
-      <h2>Alterar nome</h2>
-      <p>Atualize como seu nome aparece no app.</p>
+      <section class="profile-section">
+        <h2>Alterar nome</h2>
+        <p>Atualize como seu nome aparece no app.</p>
 
-      <form [formGroup]="nameForm" (ngSubmit)="saveName()" class="profile-form">
+        <form [formGroup]="nameForm" (ngSubmit)="saveName()" class="profile-form">
         <app-form-field
           label="Nome"
           icon="perfil"
@@ -49,18 +50,18 @@
             Salvar nome
           }
         </ion-button>
-      </form>
-    </section>
+        </form>
+      </section>
 
-    <section class="profile-section">
-      <h2>Alterar senha</h2>
-      <p>Informe a senha atual e escolha uma nova senha.</p>
+      <section class="profile-section">
+        <h2>Alterar senha</h2>
+        <p>Informe a senha atual e escolha uma nova senha.</p>
 
-      <form
-        [formGroup]="passwordForm"
-        (ngSubmit)="savePassword()"
-        class="profile-form"
-      >
+        <form
+          [formGroup]="passwordForm"
+          (ngSubmit)="savePassword()"
+          class="profile-form"
+        >
         <app-form-field
           label="Senha atual"
           icon="cadeado"
@@ -122,8 +123,9 @@
             Alterar senha
           }
         </ion-button>
-      </form>
-    </section>
+        </form>
+      </section>
+    </div>
   }
 
   <button type="button" class="logout-btn" (click)="logout()">

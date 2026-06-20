@@ -38,11 +38,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'inicio',
         pathMatch: 'full',
       },
       {
-        path: 'dashboard',
+        path: 'inicio',
         loadComponent: () =>
           import(
             './features/dashboard/pages/dashboard/dashboard.component'

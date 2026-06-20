@@ -1,27 +1,43 @@
-<ion-content fullscreen>
+<ion-content fullscreen class="main-layout-content">
   <div class="layout">
     <app-header title="Vacina Kids" />
 
-    <div class="layout-shell">
-      <aside class="desktop-sidebar">
+    <div class="layout-body">
+      <aside
+        class="desktop-sidebar"
+        [class.desktop-sidebar--collapsed]="sidebarCollapsed"
+      >
+        <button
+          type="button"
+          class="desktop-sidebar__toggle"
+          (click)="toggleSidebar()"
+          [attr.aria-expanded]="!sidebarCollapsed"
+          aria-label="Recolher ou expandir menu lateral"
+        >
+          <app-svg-icon nome="aba" cor="#473C33" [tamanho]="20" />
+        </button>
+
         <nav class="desktop-sidebar__nav" aria-label="Navegação principal desktop">
           @for (item of navigationItems; track item.route) {
             <a
               [routerLink]="item.route"
               routerLinkActive="desktop-sidebar__link--active"
-              [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+              [routerLinkActiveOptions]="{ exact: item.route === '/inicio' }"
               class="desktop-sidebar__link"
+              [attr.title]="sidebarCollapsed ? item.label : null"
             >
-              <app-svg-icon [nome]="item.icon" cor="#473C33" [tamanho]="20" />
-              <span>{{ item.label }}</span>
+              <span class="desktop-sidebar__icon">
+                <app-svg-icon [nome]="item.icon" cor="#473C33" [tamanho]="20" />
+              </span>
+              <span class="desktop-sidebar__label">{{ item.label }}</span>
             </a>
           }
         </nav>
       </aside>
 
-      <main class="content">
+      <div class="layout-main">
         <router-outlet />
-      </main>
+      </div>
     </div>
 
     <nav class="mobile-bottom-nav" aria-label="Navegação principal mobile">
@@ -29,7 +45,7 @@
         <a
           [routerLink]="item.route"
           routerLinkActive="mobile-bottom-nav__item--active"
-          [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+          [routerLinkActiveOptions]="{ exact: item.route === '/inicio' }"
           class="mobile-bottom-nav__item"
         >
           <app-svg-icon [nome]="item.icon" cor="#473C33" [tamanho]="20" />

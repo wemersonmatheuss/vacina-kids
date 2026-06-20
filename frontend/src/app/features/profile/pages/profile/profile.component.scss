@@ -1,9 +1,20 @@
 .profile {
-  max-width: 640px;
+  max-width: 1280px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.profile__cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.profile__cards-grid > * {
+  height: 100%;
 }
 
 .profile-card {
@@ -25,6 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .profile-card h1 {
@@ -37,6 +49,8 @@
 }
 
 .profile-section {
+  display: flex;
+  flex-direction: column;
   padding: 24px;
   background: var(--app-surface);
   border-radius: var(--radius-md);
@@ -58,6 +72,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
 }
 
 .profile-message {
@@ -76,6 +91,7 @@
 
 .profile-submit {
   width: fit-content;
+  margin-top: auto;
   --background: var(--ion-color-primary);
   --color: var(--app-text);
   font-weight: 700;
@@ -93,4 +109,14 @@
   color: var(--app-text);
   font-weight: 700;
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .profile__cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-card {
+    grid-column: 1 / -1;
+  }
 }
