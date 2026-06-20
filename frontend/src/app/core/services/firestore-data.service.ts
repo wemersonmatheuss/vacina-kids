@@ -21,6 +21,7 @@ import { FamilySummary } from '../../shared/interfaces/family-summary.interface'
 import { ChildSummary } from '../../shared/interfaces/child-summary.interface';
 import { Vaccine } from '../../shared/interfaces/vaccine.interface';
 import { VaccineRecord } from '../../shared/interfaces/vaccine-record.interface';
+import { VaccineRecordWithVaccine } from '../../shared/interfaces/vaccine-record-with-vaccine.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -222,6 +223,48 @@ export class FirestoreDataService {
   getChildById(childId: string): Observable<Child | null> {
     return this.getChildren().pipe(
       map((children) => children.find((child) => child.id === childId) ?? null)
+    );
+  }
+
+  getVaccineById(vaccineId: string): Observable<Vaccine | null> {
+    return this.getVaccines().pipe(
+      map((vaccines) => vaccines.find((vaccine) => vaccine.id === vaccineId) ?? null)
+    );
+  }
+
+  getChildVaccineRecords(childId: string): Observable<VaccineRecordWithVaccine[]> {
+    return combineLatest([this.getVaccineRecords(), this.getVaccines()]).pipe(
+      map(([records, vaccines]) => {
+        const vaccineMap = new Map(vaccines.map((vaccine) => [vaccine.id, vaccine]));
+
+        return records
+          .filter((record) => record.childId === childId)
+          .map((record) => {
+            const vaccine = vaccineMap.get(record.vaccineId);
+
+            if (!vaccine) {
+              return null;
+            }
+
+            return { ...record, vaccine };
+          })
+          .filter((record): record is VaccineRecordWithVaccine => record !== null);
+      })
+    );
+  }
+
+  getChildVaccineRecord(
+    childId: string,
+    vaccineId: string
+  ): Observable<VaccineRecord | null> {
+    return this.getVaccineRecords().pipe(
+      map(
+        (records) =>
+          records.find(
+            (record) =>
+              record.childId === childId && record.vaccineId === vaccineId
+          ) ?? null
+      )
     );
   }
 

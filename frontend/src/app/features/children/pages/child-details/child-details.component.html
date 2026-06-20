@@ -1,5 +1,5 @@
-@if (childSummary$ | async; as summary) {
-  @if (summary) {
+@if (childDetails$ | async; as details) {
+  @if (details.summary) {
     <div class="child-details page-padding">
       <a routerLink="/criancas" class="child-details__back">
         <app-svg-icon nome="seta-esquerda" cor="#473C33" [tamanho]="18" />
@@ -9,33 +9,40 @@
       <section class="child-details__profile">
         <div
           class="child-details__avatar"
-          [class.child-details__avatar--female]="summary.child.gender === 'female'"
+          [class.child-details__avatar--female]="details.summary.child.gender === 'female'"
         >
-          {{ getChildInitials(summary.child.name) }}
+          {{ getChildInitials(details.summary.child.name) }}
         </div>
 
         <div class="child-details__info">
-          <h1>{{ summary.child.name }}</h1>
-          <p>{{ getChildAgeLabel(summary.child.birthDate) }}</p>
-          <app-vaccine-status-badge [status]="getVaccineStatusBadgeType(summary)" />
+          <h1>{{ details.summary.child.name }}</h1>
+          <p>{{ getChildAgeLabel(details.summary.child.birthDate) }}</p>
+          <app-vaccine-status-badge
+            [status]="getVaccineStatusBadgeType(details.summary)"
+          />
         </div>
       </section>
 
       <section class="child-details__card">
         <h2>Situação vacinal</h2>
         <app-vaccination-progress-indicator
-          [percent]="getVaccinationProgressPercent(summary)"
+          [percent]="getVaccinationProgressPercent(details.summary)"
           label="Cobertura vacinal"
           size="md"
         />
         <p class="child-details__stats">
-          {{ summary.completedVaccines }} de {{ summary.totalVaccines }} vacinas concluídas
+          {{ details.summary.completedVaccines }} de {{ details.summary.totalVaccines }} vacinas concluídas
         </p>
       </section>
 
+      <app-vaccination-timeline
+        [childId]="details.childId"
+        [records]="details.vaccineRecords"
+      />
+
       <section class="child-details__actions">
         <a
-          [routerLink]="['/criancas', summary.child.id, 'editar']"
+          [routerLink]="['/criancas', details.summary.child.id, 'editar']"
           class="child-details__action child-details__action--edit"
         >
           <app-svg-icon nome="editar" cor="#473C33" [tamanho]="18" />
@@ -46,7 +53,7 @@
           type="button"
           class="child-details__action child-details__action--delete"
           [disabled]="isDeleting"
-          (click)="confirmDelete(summary.child.id, summary.child.name)"
+          (click)="confirmDelete(details.summary.child.id, details.summary.child.name)"
         >
           <app-svg-icon nome="lixeira" cor="#FDA769" [tamanho]="18" />
           {{ isDeleting ? 'Excluindo...' : 'Excluir' }}

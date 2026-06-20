@@ -1,0 +1,86 @@
+.vaccination-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.vaccination-timeline__title {
+  font-size: 1.15rem;
+}
+
+.vaccination-timeline__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.vaccination-timeline__item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 24px;
+
+  &:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    bottom: 0;
+    width: 2px;
+    background: color-mix(in srgb, var(--ion-color-primary) 35%, transparent);
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.vaccination-timeline__marker {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--ion-color-primary) 18%, white);
+  border: 2px solid var(--ion-color-primary);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.vaccination-timeline__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.vaccination-timeline__link {
+  color: var(--app-text);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--ion-color-primary);
+  }
+}
+
+.vaccination-timeline__date {
+  color: var(--app-text-light);
+  font-size: 0.875rem;
+}
+
+.vaccination-timeline__empty {
+  color: var(--app-text-light);
+  font-size: 0.9rem;
+}

@@ -1,0 +1,31 @@
+<section class="vaccination-timeline">
+  <h2 class="vaccination-timeline__title">Histórico de vacinas aplicadas</h2>
+
+  @if (appliedRecords.length > 0) {
+    <ol class="vaccination-timeline__list">
+      @for (record of appliedRecords; track record.id) {
+        <li class="vaccination-timeline__item">
+          <span class="vaccination-timeline__marker" aria-hidden="true">
+            <app-svg-icon nome="check-escudo" cor="#ABC270" [tamanho]="16" />
+          </span>
+
+          <div class="vaccination-timeline__content">
+            <a
+              [routerLink]="['/criancas', childId, 'vacinas', record.vaccineId]"
+              class="vaccination-timeline__link"
+            >
+              {{ record.vaccine.name }}
+            </a>
+            <time class="vaccination-timeline__date">
+              Aplicada em {{ formatVaccineDate(record.appliedDate!) }}
+            </time>
+          </div>
+        </li>
+      }
+    </ol>
+  } @else {
+    <p class="vaccination-timeline__empty">
+      Nenhuma vacina aplicada registrada ainda.
+    </p>
+  }
+</section>

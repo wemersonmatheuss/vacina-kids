@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { combineLatest, map, switchMap } from 'rxjs';
 
 import { FirestoreDataService } from '../../../../core/services/firestore-data.service';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../../../../shared/utils/child-summary.util';
 import { VaccineStatusBadgeComponent } from '../../../../shared/components/vaccine-status-badge/vaccine-status-badge.component';
 import { VaccinationProgressIndicatorComponent } from '../../../../shared/components/vaccination-progress-indicator/vaccination-progress-indicator.component';
+import { VaccinationTimelineComponent } from '../../../../shared/components/vaccination-timeline/vaccination-timeline.component';
 import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-icon.component';
 
 @Component({
@@ -23,6 +24,7 @@ import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-ico
     RouterLink,
     VaccineStatusBadgeComponent,
     VaccinationProgressIndicatorComponent,
+    VaccinationTimelineComponent,
     SvgIconComponent,
   ],
   templateUrl: './child-details.component.html',
@@ -35,10 +37,20 @@ export class ChildDetailsComponent {
 
   isDeleting = false;
 
-  readonly childSummary$ = this.route.paramMap.pipe(
+  readonly childDetails$ = this.route.paramMap.pipe(
     switchMap((params) => {
       const childId = params.get('id') ?? '';
-      return this.firestoreData.getChildSummaryById(childId);
+
+      return combineLatest([
+        this.firestoreData.getChildSummaryById(childId),
+        this.firestoreData.getChildVaccineRecords(childId),
+      ]).pipe(
+        map(([summary, vaccineRecords]) => ({
+          childId,
+          summary,
+          vaccineRecords,
+        }))
+      );
     })
   );
 
