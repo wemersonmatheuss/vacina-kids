@@ -1,22 +1,22 @@
 :host {
   display: block;
-  height: 100vh;
+  height: 100dvh;
 }
 
-ion-content {
+.auth-content {
   --background: var(--app-background);
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 0;
   --padding-end: 0;
-  height: 100vh;
+  --keyboard-offset: 16px;
+  height: 100dvh;
 }
 
 .auth-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 100dvh;
 }
 
 .auth-layout__visual {
@@ -24,8 +24,7 @@ ion-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
-  height: 100%;
+  min-height: 100dvh;
   padding: 48px;
   background: linear-gradient(
     145deg,
@@ -108,49 +107,40 @@ ion-content {
 
 .auth-layout__form {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
-  height: 100%;
-  padding: 40px 32px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 100dvh;
+  padding: 40px 32px calc(40px + env(safe-area-inset-bottom));
   background: var(--app-background);
 }
 
-@media (max-width: 900px) {
-  :host,
-  ion-content,
-  .auth-layout {
-    height: auto;
-    min-height: 100vh;
-  }
+.auth-layout__mobile-brand {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--app-text);
+}
 
+@media (max-width: 900px) {
   .auth-layout {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 
   .auth-layout__visual {
-    padding: 32px 24px;
-    min-height: auto;
-    height: auto;
-  }
-
-  .auth-layout__visual-content {
-    max-width: 100%;
-  }
-
-  .auth-layout__features {
     display: none;
   }
 
-  .auth-layout__decoration {
-    opacity: 0.08;
-    right: -20px;
-    bottom: -20px;
+  .auth-layout__mobile-brand {
+    display: inline-flex;
   }
 
   .auth-layout__form {
-    padding: 32px 24px 40px;
     min-height: auto;
-    height: auto;
+    padding: 24px 20px calc(32px + env(safe-area-inset-bottom));
   }
 }

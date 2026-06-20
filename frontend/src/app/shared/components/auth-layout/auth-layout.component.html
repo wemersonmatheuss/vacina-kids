@@ -1,4 +1,4 @@
-<ion-content fullscreen>
+<ion-content [scrollY]="true" class="auth-content">
   <div class="auth-layout">
     <aside class="auth-layout__visual">
       <div class="auth-layout__visual-content">
@@ -36,6 +36,11 @@
     </aside>
 
     <section class="auth-layout__form">
+      <div class="auth-layout__mobile-brand">
+        <app-svg-icon nome="check-escudo" cor="#473C33" [tamanho]="28" />
+        <span>Vacina Kids</span>
+      </div>
+
       <ng-content />
     </section>
   </div>

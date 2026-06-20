@@ -1,17 +1,19 @@
 .layout {
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
   background: var(--app-background);
-}
-
-ion-content.main-layout-content {
-  --padding-start: 0;
-  --padding-end: 0;
 }
 
 .layout-body {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
   width: 100%;
+  overflow: hidden;
 }
 
 .desktop-sidebar {
@@ -70,10 +72,15 @@ ion-content.main-layout-content {
 }
 
 .layout-main {
+  flex: 1;
   width: 100%;
   min-width: 0;
-  min-height: calc(100vh - 109px);
-  padding-bottom: 84px;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: calc(84px + env(safe-area-inset-bottom));
 }
 
 .mobile-bottom-nav {
@@ -116,10 +123,10 @@ ion-content.main-layout-content {
     flex-direction: column;
     flex-shrink: 0;
     width: 200px;
-    min-height: calc(100vh - 109px);
     border-right: 1px solid var(--app-border);
     background: var(--app-background);
     transition: width 0.2s ease;
+    overflow-y: auto;
   }
 
   .desktop-sidebar__toggle {
@@ -174,7 +181,6 @@ ion-content.main-layout-content {
   }
 
   .layout-main {
-    flex: 1;
     padding-bottom: 24px;
   }
 
