@@ -67,25 +67,6 @@
   gap: 20px;
 }
 
-.children-list__empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 48px 24px;
-  text-align: center;
-  color: var(--app-text-light);
-  background: var(--app-surface);
-  border-radius: var(--radius-md);
-  border: 1px dashed var(--app-border);
-}
-
-.children-list__empty-link {
-  color: var(--ion-color-primary);
-  font-weight: 700;
-  text-decoration: none;
-}
-
 @media (min-width: 768px) and (max-width: 1024px) {
   .children-list__grid {
     grid-template-columns: repeat(2, 1fr);

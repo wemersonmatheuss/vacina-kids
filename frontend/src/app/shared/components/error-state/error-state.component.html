@@ -1,0 +1,12 @@
+<div class="error-state">
+  <app-svg-icon nome="documento-atencao" cor="#FDA769" [tamanho]="36" />
+
+  <h3>{{ title }}</h3>
+  <p>{{ message }}</p>
+
+  @if (showRetry) {
+    <button type="button" class="error-state__retry" (click)="retry.emit()">
+      {{ retryLabel }}
+    </button>
+  }
+</div>

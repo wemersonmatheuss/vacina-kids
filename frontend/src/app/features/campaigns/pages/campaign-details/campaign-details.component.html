@@ -1,5 +1,13 @@
-@if (campaign$ | async; as campaign) {
-  @if (campaign) {
+@if (campaignState$ | async; as state) {
+  @if (state.status === 'loading') {
+    <div class="campaign-details page-padding">
+      <app-skeleton-loader variant="detail" />
+    </div>
+  } @else if (state.status === 'error') {
+    <div class="campaign-details page-padding">
+      <app-error-state [message]="state.message" (retry)="retryLoad()" />
+    </div>
+  } @else if (state.data) {
     <div class="campaign-details page-padding">
       <a routerLink="/campanhas" class="campaign-details__back">
         <app-svg-icon nome="seta-esquerda" cor="#473C33" [tamanho]="18" />
@@ -13,19 +21,19 @@
           </div>
 
           <div class="campaign-details__heading">
-            <h1>{{ campaign.title }}</h1>
+            <h1>{{ state.data.title }}</h1>
             <span
               class="campaign-details__status"
-              [class.campaign-details__status--active]="isActive(campaign)"
+              [class.campaign-details__status--active]="isActive(state.data)"
             >
-              {{ isActive(campaign) ? 'Ativa' : 'Encerrada' }}
+              {{ isActive(state.data) ? 'Ativa' : 'Encerrada' }}
             </span>
           </div>
         </section>
 
         <section class="campaign-details__card">
           <h2>Descrição</h2>
-          <p>{{ campaign.description }}</p>
+          <p>{{ state.data.description }}</p>
         </section>
       </div>
 
@@ -33,21 +41,25 @@
         <div>
           <h2>Período</h2>
           <p>
-            {{ formatDate(campaign.startDate) }} — {{ formatDate(campaign.endDate) }}
+            {{ formatDate(state.data.startDate) }} — {{ formatDate(state.data.endDate) }}
           </p>
         </div>
 
         <div>
           <h2>Público-alvo</h2>
-          <p>{{ campaign.targetAudience }}</p>
+          <p>{{ state.data.targetAudience }}</p>
         </div>
       </section>
     </div>
   } @else {
-    <div class="campaign-details page-padding campaign-details--empty">
-      <p>Campanha não encontrada.</p>
-      <a routerLink="/campanhas" class="campaign-details__back">Voltar para campanhas</a>
+    <div class="campaign-details page-padding">
+      <app-empty-state
+        icon="megafone-anuncio"
+        title="Campanha não encontrada"
+        message="Verifique se a campanha ainda está disponível."
+        actionLabel="Voltar para campanhas"
+        actionRoute="/campanhas"
+      />
     </div>
   }
 }
-

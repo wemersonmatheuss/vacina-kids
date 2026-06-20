@@ -16,40 +16,46 @@
     </a>
   </header>
 
-  @if (allSummaries$ | async; as allSummaries) {
-    @if (allSummaries.length > 0) {
-      <app-form-field label="Buscar criança" icon="lupa">
-        <input
-          class="children-list__search-input"
-          type="search"
-          [formControl]="searchControl"
-          placeholder="Digite o nome da criança"
-          aria-label="Buscar criança por nome"
+  @if (viewState$ | async; as view) {
+    @if (view.status === 'loading') {
+      <app-skeleton-loader variant="card-grid" [count]="3" />
+    } @else if (view.status === 'error') {
+      <app-error-state
+        [message]="view.message ?? 'Não foi possível carregar as crianças.'"
+        (retry)="retryLoad()"
+      />
+    } @else {
+      @if (view.allSummaries.length > 0) {
+        <app-form-field label="Buscar criança" icon="lupa">
+          <input
+            class="children-list__search-input"
+            type="search"
+            [formControl]="searchControl"
+            placeholder="Digite o nome da criança"
+            aria-label="Buscar criança por nome"
+          />
+        </app-form-field>
+      }
+
+      @if (view.filteredSummaries.length > 0) {
+        <div class="children-list__grid">
+          @for (summary of view.filteredSummaries; track summary.child.id) {
+            <app-child-status-card [summary]="summary" />
+          }
+        </div>
+      } @else {
+        <app-empty-state
+          icon="bebe"
+          [title]="view.allSummaries.length === 0
+            ? 'Nenhuma criança cadastrada ainda'
+            : 'Nenhuma criança encontrada'"
+          [message]="view.allSummaries.length === 0
+            ? 'Adicione a primeira criança para acompanhar a vacinação da família.'
+            : 'Tente buscar por outro nome.'"
+          [actionLabel]="view.allSummaries.length === 0 ? 'Adicionar primeira criança' : ''"
+          [actionRoute]="view.allSummaries.length === 0 ? '/criancas/nova' : ''"
         />
-      </app-form-field>
-    }
-  }
-
-  @if (filteredSummaries$ | async; as summaries) {
-    @if (summaries.length > 0) {
-      <div class="children-list__grid">
-        @for (summary of summaries; track summary.child.id) {
-          <app-child-status-card [summary]="summary" />
-        }
-      </div>
-    } @else if (allSummaries$ | async; as allSummaries) {
-      <div class="children-list__empty">
-        <app-svg-icon nome="bebe" cor="#6b625b" [tamanho]="40" />
-
-        @if (allSummaries.length === 0) {
-          <p>Nenhuma criança cadastrada ainda.</p>
-          <a routerLink="/criancas/nova" class="children-list__empty-link">
-            Adicionar primeira criança
-          </a>
-        } @else {
-          <p>Nenhuma criança encontrada para essa busca.</p>
-        }
-      </div>
+      }
     }
   }
 </div>

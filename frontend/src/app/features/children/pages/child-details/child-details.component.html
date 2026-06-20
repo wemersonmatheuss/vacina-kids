@@ -1,5 +1,13 @@
-@if (childDetails$ | async; as details) {
-  @if (details.summary) {
+@if (childDetailsState$ | async; as state) {
+  @if (state.status === 'loading') {
+    <div class="child-details page-padding">
+      <app-skeleton-loader variant="detail" />
+    </div>
+  } @else if (state.status === 'error') {
+    <div class="child-details page-padding">
+      <app-error-state [message]="state.message" (retry)="retryLoad()" />
+    </div>
+  } @else if (state.data.summary) {
     <div class="child-details page-padding">
       <a routerLink="/criancas" class="child-details__back">
         <app-svg-icon nome="seta-esquerda" cor="#473C33" [tamanho]="18" />
@@ -10,16 +18,16 @@
         <section class="child-details__profile">
           <div
             class="child-details__avatar"
-            [class.child-details__avatar--female]="details.summary.child.gender === 'female'"
+            [class.child-details__avatar--female]="state.data.summary.child.gender === 'female'"
           >
-            {{ getChildInitials(details.summary.child.name) }}
+            {{ getChildInitials(state.data.summary.child.name) }}
           </div>
 
           <div class="child-details__info">
-            <h1>{{ details.summary.child.name }}</h1>
-            <p>{{ getChildAgeLabel(details.summary.child.birthDate) }}</p>
+            <h1>{{ state.data.summary.child.name }}</h1>
+            <p>{{ getChildAgeLabel(state.data.summary.child.birthDate) }}</p>
             <app-vaccine-status-badge
-              [status]="getVaccineStatusBadgeType(details.summary)"
+              [status]="getVaccineStatusBadgeType(state.data.summary)"
             />
           </div>
         </section>
@@ -27,31 +35,35 @@
         <section class="child-details__card">
           <h2>Situação vacinal</h2>
           <app-vaccination-progress-indicator
-            [percent]="getVaccinationProgressPercent(details.summary)"
+            [percent]="getVaccinationProgressPercent(state.data.summary)"
             label="Cobertura vacinal"
             size="md"
           />
           <p class="child-details__stats">
-            {{ details.summary.completedVaccines }} de {{ details.summary.totalVaccines }} vacinas concluídas
+            {{ state.data.summary.completedVaccines }} de {{ state.data.summary.totalVaccines }} vacinas concluídas
           </p>
         </section>
       </div>
 
       <div class="child-details__vaccines-grid">
         <app-vaccination-pending-status
-          [childId]="details.childId"
-          [records]="details.vaccineRecords"
+          [childId]="state.data.childId"
+          [records]="state.data.vaccineRecords"
         />
 
         <app-vaccination-timeline
-          [childId]="details.childId"
-          [records]="details.vaccineRecords"
+          [childId]="state.data.childId"
+          [records]="state.data.vaccineRecords"
         />
       </div>
 
+      @if (deleteErrorMessage) {
+        <p class="child-details__error">{{ deleteErrorMessage }}</p>
+      }
+
       <section class="child-details__actions">
         <a
-          [routerLink]="['/criancas', details.summary.child.id, 'editar']"
+          [routerLink]="['/criancas', state.data.summary.child.id, 'editar']"
           class="child-details__action child-details__action--edit"
         >
           <app-svg-icon nome="editar" cor="#473C33" [tamanho]="18" />
@@ -62,7 +74,7 @@
           type="button"
           class="child-details__action child-details__action--delete"
           [disabled]="isDeleting"
-          (click)="confirmDelete(details.summary.child.id, details.summary.child.name)"
+          (click)="confirmDelete(state.data.summary.child.id, state.data.summary.child.name)"
         >
           <app-svg-icon nome="lixeira" cor="#FDA769" [tamanho]="18" />
           {{ isDeleting ? 'Excluindo...' : 'Excluir' }}
@@ -70,9 +82,14 @@
       </section>
     </div>
   } @else {
-    <div class="child-details page-padding child-details--empty">
-      <p>Criança não encontrada.</p>
-      <a routerLink="/criancas">Voltar para a listagem</a>
+    <div class="child-details page-padding">
+      <app-empty-state
+        icon="bebe"
+        title="Criança não encontrada"
+        message="Verifique se o cadastro ainda existe ou volte para a listagem."
+        actionLabel="Voltar para crianças"
+        actionRoute="/criancas"
+      />
     </div>
   }
 }

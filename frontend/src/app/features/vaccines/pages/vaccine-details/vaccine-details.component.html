@@ -1,17 +1,25 @@
-@if (vaccineDetails$ | async; as details) {
-  @if (details.vaccine && details.child) {
+@if (vaccineDetailsState$ | async; as state) {
+  @if (state.status === 'loading') {
+    <div class="vaccine-details page-padding">
+      <app-skeleton-loader variant="detail" />
+    </div>
+  } @else if (state.status === 'error') {
+    <div class="vaccine-details page-padding">
+      <app-error-state [message]="state.message" (retry)="retryLoad()" />
+    </div>
+  } @else if (state.data.vaccine && state.data.child) {
     <div class="vaccine-details page-padding">
       <a
-        [routerLink]="['/criancas', details.childId]"
+        [routerLink]="['/criancas', state.data.childId]"
         class="vaccine-details__back"
       >
         <app-svg-icon nome="seta-esquerda" cor="#473C33" [tamanho]="18" />
-        Voltar para {{ details.child.name }}
+        Voltar para {{ state.data.child.name }}
       </a>
 
       <div
         class="vaccine-details__top-grid"
-        [class.vaccine-details__top-grid--single]="!details.record"
+        [class.vaccine-details__top-grid--single]="!state.data.record"
       >
         <section class="vaccine-details__header">
           <div class="vaccine-details__icon" aria-hidden="true">
@@ -19,28 +27,28 @@
           </div>
 
           <div class="vaccine-details__heading">
-            <h1>{{ details.vaccine.name }}</h1>
-            @if (details.record) {
+            <h1>{{ state.data.vaccine.name }}</h1>
+            @if (state.data.record) {
               <app-vaccine-status-badge
-                [status]="getRecordBadgeType(details.record.status)"
+                [status]="getRecordBadgeType(state.data.record.status)"
               />
             }
           </div>
         </section>
 
-        @if (details.record) {
+        @if (state.data.record) {
           <section class="vaccine-details__card vaccine-details__card--highlight">
-            <h2>Situação para {{ details.child.name }}</h2>
+            <h2>Situação para {{ state.data.child.name }}</h2>
 
-            @if (details.record.appliedDate) {
+            @if (state.data.record.appliedDate) {
               <p>
                 Aplicada em
-                <strong>{{ formatVaccineDate(details.record.appliedDate) }}</strong>
+                <strong>{{ formatVaccineDate(state.data.record.appliedDate) }}</strong>
               </p>
             } @else {
               <p>
                 Prevista para
-                <strong>{{ formatVaccineDate(details.record.dueDate) }}</strong>
+                <strong>{{ formatVaccineDate(state.data.record.dueDate) }}</strong>
               </p>
             }
           </section>
@@ -50,19 +58,24 @@
       <div class="vaccine-details__info-grid">
         <section class="vaccine-details__card">
           <h2>Descrição</h2>
-          <p>{{ details.vaccine.description }}</p>
+          <p>{{ state.data.vaccine.description }}</p>
         </section>
 
         <section class="vaccine-details__card">
           <h2>Faixa etária recomendada</h2>
-          <p>{{ formatRecommendedAge(details.vaccine.recommendedAgeInMonths) }}</p>
+          <p>{{ formatRecommendedAge(state.data.vaccine.recommendedAgeInMonths) }}</p>
         </section>
       </div>
     </div>
   } @else {
-    <div class="vaccine-details page-padding vaccine-details--empty">
-      <p>Vacina não encontrada.</p>
-      <a routerLink="/criancas">Voltar para crianças</a>
+    <div class="vaccine-details page-padding">
+      <app-empty-state
+        icon="check-escudo"
+        title="Vacina não encontrada"
+        message="Verifique se a vacina ainda está disponível no calendário."
+        actionLabel="Voltar para crianças"
+        actionRoute="/criancas"
+      />
     </div>
   }
 }

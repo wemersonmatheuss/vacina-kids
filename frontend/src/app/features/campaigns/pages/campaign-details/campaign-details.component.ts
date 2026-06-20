@@ -1,28 +1,46 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { combineLatest, startWith, Subject, switchMap } from 'rxjs';
 
 import { FirestoreDataService } from '../../../../core/services/firestore-data.service';
-import { Campaign } from '../../../../shared/interfaces/campaign.interface';
-import { isCampaignActive } from '../../../../shared/utils/campaign.util';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state.component';
+import { SkeletonLoaderComponent } from '../../../../shared/components/skeleton-loader/skeleton-loader.component';
 import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-icon.component';
+import { isCampaignActive } from '../../../../shared/utils/campaign.util';
+import { toLoadState } from '../../../../shared/utils/load-state.util';
 
 @Component({
   selector: 'app-campaign-details',
   standalone: true,
-  imports: [CommonModule, AsyncPipe, RouterLink, SvgIconComponent],
+  imports: [
+    CommonModule,
+    AsyncPipe,
+    RouterLink,
+    EmptyStateComponent,
+    ErrorStateComponent,
+    SkeletonLoaderComponent,
+    SvgIconComponent,
+  ],
   templateUrl: './campaign-details.component.html',
   styleUrls: ['./campaign-details.component.scss'],
 })
 export class CampaignDetailsComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly firestoreData = inject(FirestoreDataService);
+  private readonly reload$ = new Subject<void>();
 
-  readonly campaign$ = this.route.paramMap.pipe(
-    switchMap((params) => {
+  readonly campaignState$ = combineLatest([
+    this.route.paramMap,
+    this.reload$.pipe(startWith(undefined)),
+  ]).pipe(
+    switchMap(([params]) => {
       const id = params.get('id') ?? '';
-      return this.firestoreData.getCampaignById(id);
+      return toLoadState(
+        this.firestoreData.getCampaignById(id),
+        'Não foi possível carregar os detalhes da campanha.'
+      );
     })
   );
 
@@ -35,5 +53,8 @@ export class CampaignDetailsComponent {
       year: 'numeric',
     }).format(date);
   }
-}
 
+  retryLoad(): void {
+    this.reload$.next();
+  }
+}

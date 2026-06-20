@@ -58,19 +58,6 @@
   color: var(--app-text);
 }
 
-.vaccines-list__empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 48px 24px;
-  text-align: center;
-  color: var(--app-text-light);
-  background: var(--app-surface);
-  border-radius: var(--radius-md);
-  border: 1px dashed var(--app-border);
-}
-
 @media (min-width: 768px) {
   .vaccines-list__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

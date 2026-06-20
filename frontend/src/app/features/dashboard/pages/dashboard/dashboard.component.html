@@ -1,69 +1,99 @@
-@if (dashboardData$ | async; as data) {
-  <div class="dashboard">
-    <section class="welcome-banner">
-      <div class="welcome-banner__content">
-        <h2>Acompanhe a saúde vacinal da sua família</h2>
-        <p>
-          Visualize pendências, campanhas ativas e o progresso de cada criança em um só lugar.
-        </p>
-      </div>
-
-      <div class="welcome-banner__decoration" aria-hidden="true">
-        <app-svg-icon nome="check-escudo" [cor]="colors.primary" [tamanho]="64" />
-      </div>
-    </section>
-
-    @if (data.overdueCount > 0) {
-      <div class="alert-banner">
-        <app-svg-icon nome="documento-atencao" [cor]="colors.warning" [tamanho]="24" />
-        <div>
-          <strong>Atenção: vacina(s) em atraso</strong>
+@if (dashboardState$ | async; as state) {
+  @if (state.status === 'loading') {
+    <div class="dashboard page-padding">
+      <app-skeleton-loader variant="dashboard" [count]="3" />
+    </div>
+  } @else if (state.status === 'error') {
+    <div class="dashboard page-padding">
+      <app-error-state [message]="state.message" (retry)="retryLoad()" />
+    </div>
+  } @else {
+    <div class="dashboard">
+      <section class="welcome-banner">
+        <div class="welcome-banner__content">
+          <h2>Acompanhe a saúde vacinal da sua família</h2>
           <p>
-            {{ data.overdueCount === 1 ? 'Existe 1 vacina' : 'Existem ' + data.overdueCount + ' vacinas' }}
-            com data prevista ultrapassada. Confira o histórico de cada criança.
+            Visualize pendências, campanhas ativas e o progresso de cada criança em um só lugar.
           </p>
         </div>
-      </div>
-    }
 
-    <app-family-summary [summary]="data.familySummary" />
-
-    @if (data.featuredCampaign) {
-      <app-featured-campaign-banner [campaign]="data.featuredCampaign" />
-    }
-
-    <section class="children-section">
-      <div class="section-header">
-        <div>
-          <h2>Suas crianças</h2>
-          <p class="section-header__subtitle">
-            Acompanhe cada filho separadamente, sem misturar históricos.
-          </p>
+        <div class="welcome-banner__decoration" aria-hidden="true">
+          <app-svg-icon nome="check-escudo" [cor]="colors.primary" [tamanho]="64" />
         </div>
-      </div>
+      </section>
 
-      <div class="children-grid">
-        @for (summary of data.childSummaries; track summary.child.id) {
-          <app-child-status-card [summary]="summary" />
+      @if (state.data.overdueCount > 0) {
+        <div class="alert-banner">
+          <app-svg-icon nome="documento-atencao" [cor]="colors.warning" [tamanho]="24" />
+          <div>
+            <strong>Atenção: vacina(s) em atraso</strong>
+            <p>
+              {{ state.data.overdueCount === 1 ? 'Existe 1 vacina' : 'Existem ' + state.data.overdueCount + ' vacinas' }}
+              com data prevista ultrapassada. Confira o histórico de cada criança.
+            </p>
+          </div>
+        </div>
+      }
+
+      <app-family-summary [summary]="state.data.familySummary" />
+
+      @if (state.data.featuredCampaign) {
+        <app-featured-campaign-banner [campaign]="state.data.featuredCampaign" />
+      }
+
+      <section class="children-section">
+        <div class="section-header">
+          <div>
+            <h2>Suas crianças</h2>
+            <p class="section-header__subtitle">
+              Acompanhe cada filho separadamente, sem misturar históricos.
+            </p>
+          </div>
+        </div>
+
+        @if (state.data.childSummaries.length > 0) {
+          <div class="children-grid">
+            @for (summary of state.data.childSummaries; track summary.child.id) {
+              <app-child-status-card [summary]="summary" />
+            }
+          </div>
+        } @else {
+          <app-empty-state
+            icon="bebe"
+            title="Nenhuma criança cadastrada ainda"
+            message="Adicione uma criança para acompanhar a vacinação da família."
+            actionLabel="Adicionar criança"
+            actionRoute="/criancas/nova"
+            [compact]="true"
+          />
         }
-      </div>
-    </section>
+      </section>
 
-    <section class="campaigns-section">
-      <div class="section-header">
-        <div>
-          <h2>Campanhas de vacinação</h2>
-          <p class="section-header__subtitle">
-            Fique por dentro das campanhas disponíveis para o público infantil.
-          </p>
+      <section class="campaigns-section">
+        <div class="section-header">
+          <div>
+            <h2>Campanhas de vacinação</h2>
+            <p class="section-header__subtitle">
+              Fique por dentro das campanhas disponíveis para o público infantil.
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div class="campaigns-grid">
-        @for (campaign of data.campaigns; track campaign.id) {
-          <app-campaign-card [campaign]="campaign" />
+        @if (state.data.campaigns.length > 0) {
+          <div class="campaigns-grid">
+            @for (campaign of state.data.campaigns; track campaign.id) {
+              <app-campaign-card [campaign]="campaign" />
+            }
+          </div>
+        } @else {
+          <app-empty-state
+            icon="megafone-anuncio"
+            title="Nenhuma campanha disponível"
+            message="Quando houver campanhas ativas, elas aparecerão aqui."
+            [compact]="true"
+          />
         }
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
+  }
 }

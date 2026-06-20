@@ -131,15 +131,10 @@
   }
 }
 
-.child-details--empty {
-  text-align: center;
-  color: var(--app-text-light);
-
-  a {
-    color: var(--ion-color-primary);
-    font-weight: 700;
-    text-decoration: none;
-  }
+.child-details__error {
+  color: var(--ion-color-danger, #c0392b);
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 @media (min-width: 768px) {

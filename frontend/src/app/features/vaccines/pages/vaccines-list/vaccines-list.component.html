@@ -4,10 +4,14 @@
     <p>Calendário vacinal com orientações por faixa etária.</p>
   </header>
 
-  @if (vaccines$ | async; as vaccines) {
-    @if (vaccines.length > 0) {
+  @if (vaccinesState$ | async; as state) {
+    @if (state.status === 'loading') {
+      <app-skeleton-loader variant="vaccine-grid" [count]="4" />
+    } @else if (state.status === 'error') {
+      <app-error-state [message]="state.message" (retry)="retryLoad()" />
+    } @else if (state.data.length > 0) {
       <div class="vaccines-list__grid">
-        @for (vaccine of vaccines; track vaccine.id) {
+        @for (vaccine of state.data; track vaccine.id) {
           <article class="vaccines-list__card">
             <div class="vaccines-list__card-header">
               <h2>{{ vaccine.name }}</h2>
@@ -21,11 +25,11 @@
         }
       </div>
     } @else {
-      <div class="vaccines-list__empty">
-        <app-svg-icon nome="check-escudo" cor="#6b625b" [tamanho]="40" />
-        <p>Nenhuma vacina cadastrada no momento.</p>
-      </div>
+      <app-empty-state
+        icon="check-escudo"
+        title="Nenhuma vacina cadastrada no momento"
+        message="O calendário vacinal aparecerá aqui assim que estiver disponível."
+      />
     }
   }
 </div>
-
