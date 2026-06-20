@@ -1,18 +1,46 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { combineLatest, map, startWith } from 'rxjs';
 
 import { FirestoreDataService } from '../../../../core/services/firestore-data.service';
-import { ChildCardComponent } from '../../../../shared/components/child-card/child-card.component';
+import { ChildStatusCardComponent } from '../../../../shared/components/child-status-card/child-status-card.component';
+import { FormFieldComponent } from '../../../../shared/components/form-field/form-field.component';
+import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-icon.component';
 
 @Component({
   selector: 'app-children-list',
   standalone: true,
-  imports: [CommonModule, AsyncPipe, ChildCardComponent],
+  imports: [
+    CommonModule,
+    AsyncPipe,
+    ReactiveFormsModule,
+    ChildStatusCardComponent,
+    FormFieldComponent,
+    SvgIconComponent,
+  ],
   templateUrl: './children-list.component.html',
   styleUrls: ['./children-list.component.scss'],
 })
 export class ChildrenListComponent {
   private readonly firestoreData = inject(FirestoreDataService);
 
-  readonly childSummaries$ = this.firestoreData.getChildSummaries();
+  readonly searchControl = new FormControl('', { nonNullable: true });
+
+  readonly filteredSummaries$ = combineLatest([
+    this.firestoreData.getChildSummaries(),
+    this.searchControl.valueChanges.pipe(startWith('')),
+  ]).pipe(
+    map(([summaries, query]) => {
+      const normalizedQuery = query.trim().toLowerCase();
+
+      if (!normalizedQuery) {
+        return summaries;
+      }
+
+      return summaries.filter((summary) =>
+        summary.child.name.toLowerCase().includes(normalizedQuery)
+      );
+    })
+  );
 }

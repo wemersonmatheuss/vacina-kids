@@ -1,14 +1,33 @@
 <div class="children-list page-padding">
-  <div class="children-list__header">
-    <h1>Crianças</h1>
-    <p>Gerencie e acompanhe a situação vacinal de cada filho separadamente.</p>
-  </div>
+  <header class="children-list__header">
+    <div>
+      <h1>Crianças</h1>
+      <p>Gerencie e acompanhe a situação vacinal de cada filho separadamente.</p>
+    </div>
+  </header>
 
-  <div class="children-list__grid">
-    @for (summary of childSummaries$ | async; track summary.child.id) {
-      <app-child-card [summary]="summary" />
-    } @empty {
-      <p class="children-list__empty">Nenhuma criança cadastrada ainda.</p>
+  <app-form-field label="Buscar criança" icon="lupa">
+    <input
+      class="children-list__search-input"
+      type="search"
+      [formControl]="searchControl"
+      placeholder="Digite o nome da criança"
+      aria-label="Buscar criança por nome"
+    />
+  </app-form-field>
+
+  @if (filteredSummaries$ | async; as summaries) {
+    @if (summaries.length > 0) {
+      <div class="children-list__grid">
+        @for (summary of summaries; track summary.child.id) {
+          <app-child-status-card [summary]="summary" />
+        }
+      </div>
+    } @else {
+      <div class="children-list__empty">
+        <app-svg-icon nome="bebe" cor="#6b625b" [tamanho]="40" />
+        <p>Nenhuma criança encontrada para essa busca.</p>
+      </div>
     }
-  </div>
+  }
 </div>

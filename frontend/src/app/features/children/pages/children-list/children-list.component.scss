@@ -7,7 +7,7 @@
 }
 
 .children-list__header h1 {
-  font-size: 1.5rem;
+  font-size: clamp(1.35rem, 3vw, 1.5rem);
   margin-bottom: 6px;
 }
 
@@ -15,12 +15,54 @@
   color: var(--app-text-light);
 }
 
+.children-list__search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--app-text);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 0;
+  outline: none;
+
+  &::placeholder {
+    color: color-mix(in srgb, var(--app-text-light) 70%, transparent);
+  }
+}
+
 .children-list__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 20px;
 }
 
 .children-list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px;
+  text-align: center;
   color: var(--app-text-light);
+  background: var(--app-surface);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--app-border);
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .children-list__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .children-list__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .children-list__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

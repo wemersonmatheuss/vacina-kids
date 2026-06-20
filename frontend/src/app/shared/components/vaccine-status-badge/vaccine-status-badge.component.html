@@ -1,0 +1,6 @@
+<span class="vaccine-status-badge" [class]="'vaccine-status-badge--' + status">
+  @if (showIcon) {
+    <app-svg-icon [nome]="iconName" [cor]="iconColor" [tamanho]="18" />
+  }
+  {{ badgeLabels[status] }}
+</span>

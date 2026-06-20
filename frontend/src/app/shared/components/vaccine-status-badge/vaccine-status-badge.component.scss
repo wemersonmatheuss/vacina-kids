@@ -1,0 +1,25 @@
+.vaccine-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+
+  &--ok {
+    color: var(--ion-color-primary);
+    background: color-mix(in srgb, var(--ion-color-primary) 18%, transparent);
+  }
+
+  &--pending {
+    color: #c4893f;
+    background: color-mix(in srgb, var(--ion-color-secondary) 25%, transparent);
+  }
+
+  &--overdue {
+    color: var(--ion-color-warning);
+    background: color-mix(in srgb, var(--ion-color-warning) 18%, transparent);
+  }
+}
