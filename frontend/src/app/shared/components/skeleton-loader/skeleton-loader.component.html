@@ -1,0 +1,52 @@
+@switch (variant) {
+  @case ('dashboard') {
+    <div class="skeleton-dashboard">
+      <ion-skeleton-text animated class="skeleton-dashboard__banner" />
+
+      <div class="skeleton-dashboard__summary">
+        @for (item of [0, 1, 2]; track item) {
+          <ion-skeleton-text animated class="skeleton-dashboard__summary-card" />
+        }
+      </div>
+
+      <div class="skeleton-dashboard__section">
+        <ion-skeleton-text animated class="skeleton-dashboard__title" />
+        <div class="skeleton-grid skeleton-grid--cards">
+          @for (item of items; track item) {
+            <ion-skeleton-text animated class="skeleton-card" />
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  @case ('detail') {
+    <div class="skeleton-detail">
+      <ion-skeleton-text animated class="skeleton-detail__back" />
+      <div class="skeleton-detail__grid">
+        <ion-skeleton-text animated class="skeleton-detail__profile" />
+        <ion-skeleton-text animated class="skeleton-detail__panel" />
+      </div>
+      <div class="skeleton-detail__grid">
+        <ion-skeleton-text animated class="skeleton-detail__panel skeleton-detail__panel--tall" />
+        <ion-skeleton-text animated class="skeleton-detail__panel skeleton-detail__panel--tall" />
+      </div>
+    </div>
+  }
+
+  @case ('vaccine-grid') {
+    <div class="skeleton-grid skeleton-grid--vaccines">
+      @for (item of items; track item) {
+        <ion-skeleton-text animated class="skeleton-vaccine-card" />
+      }
+    </div>
+  }
+
+  @default {
+    <div class="skeleton-grid skeleton-grid--cards">
+      @for (item of items; track item) {
+        <ion-skeleton-text animated class="skeleton-card" />
+      }
+    </div>
+  }
+}
