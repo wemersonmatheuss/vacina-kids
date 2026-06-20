@@ -9,6 +9,13 @@
     </div>
   </header>
 
+  @if (featuredCampaign$ | async; as featuredCampaign) {
+    <app-featured-campaign-banner
+      [campaign]="featuredCampaign"
+      [showLink]="false"
+    />
+  }
+
   @if (activeCampaigns$ | async; as activeCampaigns) {
     <section class="campaigns-list__summary">
       <app-svg-icon nome="megafone-anuncio" cor="#473C33" [tamanho]="22" />

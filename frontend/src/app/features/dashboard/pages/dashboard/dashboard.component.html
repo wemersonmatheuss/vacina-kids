@@ -28,6 +28,10 @@
 
     <app-family-summary [summary]="data.familySummary" />
 
+    @if (data.featuredCampaign) {
+      <app-featured-campaign-banner [campaign]="data.featuredCampaign" />
+    }
+
     <section class="children-section">
       <div class="section-header">
         <div>

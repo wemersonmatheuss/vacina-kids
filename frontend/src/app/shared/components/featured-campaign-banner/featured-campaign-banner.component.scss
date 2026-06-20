@@ -1,0 +1,97 @@
+.featured-campaign-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(24px, 4vw, 32px);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ion-color-secondary) 35%, white) 0%,
+    color-mix(in srgb, var(--ion-color-warning) 28%, white) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--ion-color-secondary) 35%, var(--app-border));
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.featured-campaign-banner__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+  z-index: 1;
+}
+
+.featured-campaign-banner__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, white 70%, transparent);
+  color: var(--app-text);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.featured-campaign-banner__content h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  color: var(--app-text);
+}
+
+.featured-campaign-banner__content p {
+  color: var(--app-text-light);
+  line-height: 1.5;
+}
+
+.featured-campaign-banner__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--app-text);
+  }
+}
+
+.featured-campaign-banner__link {
+  width: fit-content;
+  margin-top: 4px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--ion-color-primary);
+  color: var(--app-text);
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.featured-campaign-banner__decoration {
+  opacity: 0.2;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .featured-campaign-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .featured-campaign-banner__decoration {
+    align-self: flex-end;
+  }
+}
